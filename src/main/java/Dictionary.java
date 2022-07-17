@@ -7,7 +7,7 @@ public class Dictionary {
         return listWord;
     }
 
-    public void setListWord(ArrayList<Word> listWord) {
-        this.listWord = listWord;
+    public void setListWord(ArrayList<Word> list) {
+        listWord = list;
     }
 }
