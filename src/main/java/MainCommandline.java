@@ -20,6 +20,7 @@ public class MainCommandline {
                     "\t2. Tìm từ\n" +
                     "\t3. Thêm từ mới\n" +
                     "\t4. Xoá từ\n" +
+                    "\t5. Dịch văn bản\n" +
                     "Chọn thao tác: ", "------- DICTIONARY JAVA APP -------");
             int select;
             select = Integer.parseInt(scanner.nextLine());
@@ -35,6 +36,9 @@ public class MainCommandline {
                     break;
                 case 4:
                     dictionaryCMD.deleteWord();
+                    break;
+                case 5:
+                    dictionaryCMD.showTranslateText();
                     break;
                 default:
                     check = false;

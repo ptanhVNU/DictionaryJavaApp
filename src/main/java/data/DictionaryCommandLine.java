@@ -1,9 +1,15 @@
 package data;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DictionaryCommandLine {
+    public String stringScanner() {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        return s;
+    }
     public void showAllWords() {
         ArrayList<Word> listWords = Dictionary.listWord;
         System.out.printf("%-7s| %-20s| %-50s\n", "No", "English", "Vietnamese");
@@ -24,8 +30,8 @@ public class DictionaryCommandLine {
 
     public void dictionarySearcher() {
         System.out.print("Nhap tu ban muon tim kiem: ");
-        Scanner scanner = new Scanner(System.in);
-        String search = scanner.nextLine();
+        String search = stringScanner();
+
         ArrayList<Word> listWords = Dictionary.getListWord();
         System.out.printf("%-7s| %-20s| %-50s\n", "No", "English", "Vietnamese");
         for (int i = 0; i < listWords.size(); i++) {
@@ -39,9 +45,8 @@ public class DictionaryCommandLine {
     public void deleteWord() {
         boolean check = false;
         System.out.println("Nhập từ cần xóa: ");
-        Scanner sc = new Scanner(System.in);
-        String del;
-        del = sc.nextLine();
+        String del = stringScanner();
+
         for (int i = 0; i < Dictionary.listWord.size(); i++) {
             if (Dictionary.listWord.get(i).getWord_target().equals(del)) {
                 Dictionary.listWord.remove(i);
@@ -51,6 +56,16 @@ public class DictionaryCommandLine {
         }
         if (!check) {
             System.out.println("Không tìm thấy từ để xóa!");
+        }
+    }
+
+    public void showTranslateText() {
+        String text = stringScanner();
+        try {
+            System.out.println(TranslateAPI.googleTranslate("", "vi", text));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
