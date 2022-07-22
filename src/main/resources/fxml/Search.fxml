@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400" prefWidth="540" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SearchController">
+    <children>
+        <AnchorPane prefHeight="400" prefWidth="180">
+            <children>
+                <VBox prefHeight="400" prefWidth="180">
+                    <children>
+                        <HBox prefHeight="30" prefWidth="180">
+                            <children>
+                                <TextField fx:id="searchField" onKeyReleased="#searchPressKeyBoard" prefHeight="30.0" promptText="Điền từ cần tra" />
+                                <Button mnemonicParsing="false" prefHeight="30" prefWidth="30" text="Button" />
+                            </children>
+                        </HBox>
+                        <ListView fx:id="searchList" prefHeight="370.0" />
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+
+        <AnchorPane layoutX="180" prefHeight="400" prefWidth="360">
+            <children>
+                <VBox prefHeight="400" prefWidth="360">
+                    <children>
+                        <Label fx:id="searchWord" prefHeight="50.0" text="Nghĩa của từ" />
+                        <TextArea prefHeight="350.0" prefWidth="200.0" />
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

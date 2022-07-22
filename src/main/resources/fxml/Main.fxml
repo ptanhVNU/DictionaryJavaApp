@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+    <children>
+        <VBox prefHeight="300" prefWidth="60">
+            <children>
+                <Button mnemonicParsing="false" prefHeight="60" prefWidth="60" text="Button" />
+                <Button mnemonicParsing="false" onAction="#showSearchPane" prefHeight="60" prefWidth="60" text="Search" />
+                <Button mnemonicParsing="false" onAction="#showTranslatePane" prefHeight="60" prefWidth="60" text="Translate" />
+                <Button mnemonicParsing="false" onAction="#showBookmarkPane" prefHeight="60" prefWidth="60" text="Bookmark" />
+                <Button mnemonicParsing="false" onAction="#showHistoryPane" prefHeight="60" prefWidth="60" text="History" />
+            </children>
+        </VBox>
+        <VBox layoutY="340" prefHeight="60" prefWidth="60">
+            <children>
+                <Button mnemonicParsing="false" onAction="#showSettingPane" prefHeight="60" prefWidth="60" text="Button" />
+            </children>
+        </VBox>
+        <AnchorPane fx:id="mainContent" layoutX="60.0" prefHeight="400" prefWidth="540.0" />
+    </children>
+</AnchorPane>
