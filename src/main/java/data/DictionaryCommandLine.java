@@ -61,11 +61,6 @@ public class DictionaryCommandLine {
 
     public void showTranslateText() {
         String text = stringScanner();
-        try {
-            System.out.println(TranslateAPI.googleTranslate("", "vi", text));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(TranslateAPI.googleTranslate("", "vi", text));
     }
 }
