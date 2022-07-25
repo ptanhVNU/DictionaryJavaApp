@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-public class DictionaryManagement {
+public class DictionaryManagement extends Dictionary {
     final String dictionaryFilePath = "src/main/resources/data/dictionaries.txt";
-    ArrayList<Word> listWord = new ArrayList<>();
-    public static void insertFromCommandline() {
+
+    /** insert From Command line. */
+    public void insertFromCommandline() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nhap so luong tu ban muon them: ");
         int numsWord;
@@ -17,64 +18,85 @@ public class DictionaryManagement {
             System.out.print("English: ");
             String target = scanner.nextLine();
             if (target.equals("")) {
+                System.out.println("No target");
                 break;
             }
             System.out.print("Vietnamese: ");
             String explain = scanner.nextLine();
             if (explain.equals("")) {
+                System.out.println("No explain");
                 break;
             }
-            Word word = new Word();
-            word.setWord_target(target);
-            word.setWord_explain(explain);
-            Dictionary.listWord.add(word);
+            Word data = new Word();
+            data.setWord(target);
+            data.addDetail(null, explain, null, null);
+            wordList.add(data);
+            addNode(data);
         }
     }
 
-    public ArrayList<Word> insertFromFile() {
+    /** insert From File. */
+    public void insertFromFile() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(dictionaryFilePath));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] words = line.split("\t");
                 Word word = new Word();
-                word.setWord_target(words[0]);
-                word.setWord_explain(words[words.length - 1]);
-                listWord.add(word);
+                word.setWord(words[0]);
+                word.addDetail(null, words[words.length - 1], null, null);
+                wordList.add(word);
+                addNode(word);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return listWord;
     }
 
-    public void dictionaryLookup() {
-        System.out.print("Nhap tu ban muon tim kiem: ");
-        Scanner scanner = new Scanner(System.in);
-        String lookUp = scanner.nextLine();
-        ArrayList<Word> listWords = Dictionary.getListWord();
-        System.out.printf("%-7s| %-20s| %-50s\n", "No", "English", "Vietnamese");
-        for (int i = 0; i < listWords.size(); i++) {
-            if (listWords.get(i).getWord_target().equals(lookUp.toLowerCase())) {
-                System.out.printf("%-7d| %-20s| %-50s\n", i, listWords.get(i).getWord_target(),
-                        listWords.get(i).getWord_explain());
-            }
-        }
+    /** dictionary Lookup. */
+    public Word dictionaryLookup(String lookUp) {
+        Word result = new Word();
+        result = searchNode(lookUp);
+        return result;
     }
 
-
-
+    /** dictionary Export To File. */
     public void dictionaryExportToFile() {
-        File file = new File("E:\\ProjectJava\\Dictionary\\src\\main\\resources\\data\\dictionaries.txt");
+        File file =
+                new File("E:\\ProjectJava\\Dictionary\\src\\main\\resources\\data\\dictionaries.txt");
         try {
             FileWriter myWriter = new FileWriter(file);
-            for (int i = 0; i < Dictionary.listWord.size(); i++) {
-                myWriter.write(Dictionary.listWord.get(i).getWord_target()
-                        + "\t" + Dictionary.listWord.get(i).getWord_explain() + "\n");
+            for (int i = 0; i < wordList.size(); i++) {
+                myWriter.write(
+                        wordList.get(i).getWord()
+                                + "\t"
+                                + wordList.get(i).details.get(0).getExplanations()
+                                + "\n");
             }
             myWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    /** delete Word */
+    public String dictionaryDelete(String key) {
+        Trie delelte = findNode(key);
+        if (delelte == null) {
+            return "Not found key!";
+        }
+        deleteNode(delelte);
+        return "Completed";
+    }
+
+    public void speak(String text) {
+        TextToSpeech speech = new TextToSpeech(text);
+        speech.speakText();
+    }
+
+    public void speakWord_target(int index) {
+        TextToSpeech speech = new TextToSpeech(wordList.get(index).getWord());
+        speech.speakText();
+    }
+
 }
