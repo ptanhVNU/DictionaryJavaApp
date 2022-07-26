@@ -1,7 +1,5 @@
 package data;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
 import java.util.ArrayList;
 
 public class Dictionary {
