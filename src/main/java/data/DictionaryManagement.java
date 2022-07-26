@@ -34,8 +34,6 @@ public class DictionaryManagement extends Dictionary {
             addNode(data);
         }
     }
-    return;
-  }
 
     /** insert From File. */
     public void insertFromFile() {
@@ -54,7 +52,6 @@ public class DictionaryManagement extends Dictionary {
             e.printStackTrace();
         }
     }
-  }
 
     /** dictionary Lookup. */
     public Word dictionaryLookup(String lookUp) {
@@ -62,7 +59,6 @@ public class DictionaryManagement extends Dictionary {
         result = searchNode(lookUp);
         return result;
     }
-  }
 
     /** dictionary Export To File. */
     public void dictionaryExportToFile() {
@@ -102,5 +98,4 @@ public class DictionaryManagement extends Dictionary {
         TextToSpeech speech = new TextToSpeech(wordList.get(index).getWord());
         speech.speakText();
     }
-
 }
