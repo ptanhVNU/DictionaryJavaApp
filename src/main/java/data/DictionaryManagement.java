@@ -98,5 +98,4 @@ public class DictionaryManagement extends Dictionary {
         TextToSpeech speech = new TextToSpeech(wordList.get(index).getWord());
         speech.speakText();
     }
-
 }

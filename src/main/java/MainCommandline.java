@@ -7,9 +7,7 @@ import java.util.Scanner;
 public class MainCommandline {
     public static void main(String[] args) {
         DictionaryCommandLine dictionaryCMD = new DictionaryCommandLine();
-        Dictionary dictionary = new Dictionary();
-        DictionaryManagement dictionaryMG = new DictionaryManagement();
-        dictionary.setListWord(dictionaryMG.insertFromFile());
+        dictionaryCMD.insertFromFile();
         boolean check = true;
         Scanner scanner = new Scanner(System.in);
 

@@ -1,6 +1,6 @@
 .root {
-    -text-color: #686868;
-    -hover-text-color: #202020;
+    -text-color: #696969;
+    -hover-text-color: #181818;
 
     -background-color: white;
     -hover-background-color: #D4D7DC;
@@ -22,7 +22,7 @@
     -fx-cursor: hand;
 }
 
-.button:hover .SVGPath-main {
+.button:hover .SVGPath-mainPane {
     -fx-fill: -hover-text-color;
 }
 
@@ -30,7 +30,7 @@
     -fx-background-color: -hover-background-color;
 }
 
-.button.active .SVGPath-main {
+.button.active .SVGPath-mainPane {
     -fx-fill: -hover-text-color;
 }
 
@@ -39,13 +39,13 @@
     -fx-cursor: default !important;
 }
 
-.button-inactive:hover .SVGPath-main {
+.button-inactive:hover .SVGPath-mainPane {
     -fx-fill: -text-color !important;
 }
 
 /*===================================SVGPath=====================================*/
 
-.SVGPath-main {
+.SVGPath-mainPane {
     -fx-fill: -text-color;
     -fx-scale-x: 0.6;
     -fx-scale-y: 0.6;

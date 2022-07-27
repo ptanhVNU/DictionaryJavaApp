@@ -100,6 +100,8 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        searchButton.getStyleClass().add("active");
         mainContent.getChildren().setAll(searchPane);
     }
 }
