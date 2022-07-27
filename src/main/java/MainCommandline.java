@@ -19,6 +19,7 @@ public class MainCommandline {
                     "\t3. Thêm từ mới\n" +
                     "\t4. Xoá từ\n" +
                     "\t5. Dịch văn bản\n" +
+                    "\t6. Test prefix\n" +
                     "Chọn thao tác: ", "------- DICTIONARY JAVA APP -------");
             int select;
             select = Integer.parseInt(scanner.nextLine());
@@ -37,6 +38,9 @@ public class MainCommandline {
                     break;
                 case 5:
                     dictionaryCMD.showTranslateText();
+                    break;
+                case 6:
+                    dictionaryCMD.showPrefix();
                     break;
                 default:
                     check = false;

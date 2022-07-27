@@ -62,4 +62,20 @@ public class DictionaryCommandLine extends DictionaryManagement {
       e.printStackTrace();
     }
   }
+
+  public void showPrefix() {
+    String key = stringScanner();
+    setResultsList(new ArrayList<>());
+    String msg = searchPrefixWord(key);
+    setWordList();
+    System.out.printf("%-7s| %-20s| %-50s\n", "No", "English", "Vietnamese");
+    for (int i = 0; i < wordList.size(); i++) {
+      System.out.printf(
+              "%-7d| %-20s| %-50s\n",
+              i, wordList.get(i).getWord(), wordList.get(i).details.get(0).getExplanations());
+    }
+    if (wordList.size() == 0) {
+      System.out.println(msg);
+    }
+  }
 }

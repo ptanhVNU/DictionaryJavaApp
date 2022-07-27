@@ -29,6 +29,13 @@ public class Word {
       this.pronounciation = pronounciation;
     }
 
+    public Detail(Detail detail) {
+      this.word_type = detail.getWord_type();
+      this.explanations = detail.getExplanations();
+      this.usages = detail.getUsages();
+      this.pronounciation = detail.getPronounciation();
+    }
+
     public String getWord_type() {
       return word_type;
     }
@@ -93,5 +100,9 @@ public class Word {
   public void addDetail(
       String word_type, String explanations, ArrayList<String> usages, String pronounciation) {
     details.add(new Detail(word_type, explanations, usages, pronounciation));
+  }
+
+  void Speech() {
+
   }
 }

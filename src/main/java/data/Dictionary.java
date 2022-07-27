@@ -174,4 +174,27 @@ public class Dictionary {
   public void setWordList() {
     wordList = resultsList;
   }
+
+  /** Find out all word have prefix key. */
+  public String searchPrefixWord(String key) {
+    if (key == null) {
+      return "Enter a key";
+    }
+
+    Trie pointer = root;
+    setResultsList(new ArrayList<>());
+
+    for (int i = 0; i < key.length(); ++i) {
+      char character = key.charAt(i);
+      if (pointer.isExistInChildren(character) == null) {
+        return "Not found key";
+      }
+
+      pointer = pointer.isExistInChildren(character);
+    }
+
+    getAllWord(pointer);
+
+    return "resultsList";
+  }
 }
