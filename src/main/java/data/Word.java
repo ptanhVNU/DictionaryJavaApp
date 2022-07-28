@@ -118,5 +118,7 @@ public class Word {
     return this.getWord();
   }
 
-  void Speech() {}
+  public void Speech() {
+    toSpeech.speakText();
+  }
 }

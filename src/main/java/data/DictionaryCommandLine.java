@@ -72,4 +72,9 @@ public class DictionaryCommandLine extends DictionaryManagement {
       System.out.println("Not found");
     }
   }
+
+  public void speak() {
+    String text = stringScanner();
+    speak(text);
+  }
 }
