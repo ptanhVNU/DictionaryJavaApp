@@ -4,7 +4,7 @@ import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
 public class TextToSpeech {
-    private final String text;
+    private String text;
 
     public TextToSpeech(String text) {
         this.text = text;
