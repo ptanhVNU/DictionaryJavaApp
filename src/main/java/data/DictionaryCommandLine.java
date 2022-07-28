@@ -50,7 +50,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
     boolean check = false;
     System.out.println("Nhập từ cần xóa: ");
     String del = stringScanner();
-    String msg = dictionaryDelete(del);
+    String msg = dictionaryDeleteString(del);
     System.out.println(msg);
   }
 
@@ -61,9 +61,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
 
   public void showPrefix() {
     String key = stringScanner();
-    setResultsList(new ArrayList<>());
-    String msg = searchPrefixWord(key);
-    setWordList();
+    ArrayList<Word> list = dictionaryLookupPrefix(key);
     System.out.printf("%-7s| %-20s| %-50s\n", "No", "English", "Vietnamese");
     for (int i = 0; i < wordList.size(); i++) {
       System.out.printf(
@@ -71,7 +69,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
               i, wordList.get(i).getWord(), wordList.get(i).details.get(0).getExplanations());
     }
     if (wordList.size() == 0) {
-      System.out.println(msg);
+      System.out.println("Not found");
     }
   }
 }

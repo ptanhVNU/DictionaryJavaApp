@@ -1,12 +1,12 @@
 package data;
 
+import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
 public class DictionaryManagement extends Dictionary {
-    final String dictionaryFilePath = "src/main/resources/data/dictionaries.txt";
-
     /** insert From Command line. */
     public void insertFromCommandline() {
         Scanner scanner = new Scanner(System.in);
@@ -36,7 +36,8 @@ public class DictionaryManagement extends Dictionary {
     }
 
     /** insert From File. */
-    public void insertFromFile() {
+    public void insertFromFile(String file) {
+        String dictionaryFilePath = "src/main/resources/data/" + file;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(dictionaryFilePath));
             String line;
@@ -60,10 +61,14 @@ public class DictionaryManagement extends Dictionary {
         return result;
     }
 
-    /** dictionary Export To File. */
-    public void dictionaryExportToFile() {
+    /**
+     *dictionary Export To File.
+     * TODO: flexiable file export
+     * String pathname = "E:\\ProjectJava\\Dictionary\\src\\main\\resources\\data\\dictionaries.txt";
+     * */
+    public void dictionaryExportToFile(String pathName) {
         File file =
-                new File("E:\\ProjectJava\\Dictionary\\src\\main\\resources\\data\\dictionaries.txt");
+                new File(pathName);
         try {
             FileWriter myWriter = new FileWriter(file);
             for (int i = 0; i < wordList.size(); i++) {
@@ -79,8 +84,8 @@ public class DictionaryManagement extends Dictionary {
         }
     }
 
-    /** delete Word */
-    public String dictionaryDelete(String key) {
+    /** delete Word String */
+    public String dictionaryDeleteString(String key) {
         Trie delelte = findNode(key);
         if (delelte == null) {
             return "Not found key!";
@@ -89,6 +94,18 @@ public class DictionaryManagement extends Dictionary {
         return "Completed";
     }
 
+    /** delete Word Word */
+    public String dictionaryDeleteWord(Word data) {
+        String key = data.getWord();
+        Trie delelte = findNode(key);
+        if (delelte == null) {
+            return "Not found key!";
+        }
+        deleteNode(delelte);
+        return "Completed";
+    }
+
+    /** speak */
     public void speak(String text) {
         TextToSpeech speech = new TextToSpeech(text);
         speech.speakText();
@@ -97,5 +114,12 @@ public class DictionaryManagement extends Dictionary {
     public void speakWord_target(int index) {
         TextToSpeech speech = new TextToSpeech(wordList.get(index).getWord());
         speech.speakText();
+    }
+
+    public ArrayList<Word> dictionaryLookupPrefix(String key) {
+        setResultsList(new ArrayList<>());
+        String msg = searchPrefixWord(key);
+        setWordList();
+        return wordList;
     }
 }
