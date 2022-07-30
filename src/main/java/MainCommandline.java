@@ -40,7 +40,7 @@ public class MainCommandline {
                     dictionaryCMD.showTranslateText();
                     break;
                 case 6:
-                    dictionaryCMD.speak();
+                    dictionaryCMD.export();
                     break;
                 default:
                     check = false;

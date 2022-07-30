@@ -77,4 +77,8 @@ public class DictionaryCommandLine extends DictionaryManagement {
     String text = stringScanner();
     speak(text);
   }
+
+  public void export() {
+    dictionaryExportToFile("src\\main\\resources\\data\\bookmarks.txt");
+  }
 }

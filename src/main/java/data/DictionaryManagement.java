@@ -67,6 +67,9 @@ public class DictionaryManagement extends Dictionary {
    * = "E:\\ProjectJava\\Dictionary\\src\\main\\resources\\data\\dictionaries.txt";
    */
   public void dictionaryExportToFile(String pathName) {
+    setResultsList(new ArrayList<>());
+    getAllWord(root);
+    setWordList();
     File file = new File(pathName);
     try {
       FileWriter myWriter = new FileWriter(file);
@@ -96,7 +99,7 @@ public class DictionaryManagement extends Dictionary {
   }
 
   /** find out on another Dictionary */
-  void handleExport(ArrayList<String> list, DictionaryManagement another) {
+  public void handleExport(ArrayList<String> list, DictionaryManagement another) {
     ArrayList<Word> words;
     for (String key : list) {
       dictionaryAddWord(another.searchWord(key));
