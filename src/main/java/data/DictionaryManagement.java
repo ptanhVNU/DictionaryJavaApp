@@ -96,7 +96,7 @@ public class DictionaryManagement extends Dictionary {
   }
 
   /** find out on another Dictionary */
-  public void handleExport(ArrayList<String> list, DictionaryManagement another) {
+  void handleExport(ArrayList<String> list, DictionaryManagement another) {
     ArrayList<Word> words;
     for (String key : list) {
       dictionaryAddWord(another.searchWord(key));
