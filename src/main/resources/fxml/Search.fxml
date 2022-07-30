@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
@@ -7,22 +8,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400" prefWidth="540" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="main.SearchController">
+<AnchorPane prefHeight="400" prefWidth="540" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SearchController">
     <children>
         <AnchorPane prefHeight="400" prefWidth="180">
             <children>
                 <VBox prefHeight="400" prefWidth="180" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0">
                     <children>
-                        <TextField fx:id="searchField" onKeyReleased="#searchPressKeyBoard" prefHeight="30.0"
-                                   promptText="Search">
+                        <TextField fx:id="searchField" onKeyReleased="#searchPressKeyBoard" prefHeight="30.0" promptText="Search">
                             <VBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0"/>
+                                <Insets bottom="5.0" left="5.0" right="5.0" />
                             </VBox.margin>
                         </TextField>
-                        <ListView fx:id="searchList">
+                        <ListView fx:id="searchList" onMouseClicked="#choiceWordAction">
                             <VBox.margin>
-                                <Insets left="5.0" right="5.0"/>
+                                <Insets left="5.0" right="5.0" />
                             </VBox.margin>
                         </ListView>
                     </children>
@@ -32,80 +31,79 @@
 
         <AnchorPane layoutX="180" prefHeight="400.0" prefWidth="360.0">
             <children>
-                <VBox prefHeight="400.0" prefWidth="360.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                      AnchorPane.topAnchor="5.0">
+                <VBox prefHeight="400.0" prefWidth="360.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                     <children>
                         <HBox prefHeight="100.0">
                             <children>
-                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                <VBox maxHeight="70.0" maxWidth="200.0" minHeight="70.0" minWidth="200.0" prefHeight="70.0" prefWidth="200.0">
                                     <children>
-                                        <Label fx:id="searchWord" prefHeight="30.0" text="Nghĩa của từ"/>
-                                        <Button maxHeight="20.0" maxWidth="20.0" minHeight="20.0" minWidth="20.0"
-                                                mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0">
+                                        <Label fx:id="searchWord" prefHeight="50.0" text="Nghĩa của từ">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font></Label>
+                                        <Button maxHeight="20.0" maxWidth="20.0" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0">
                                             <graphic>
-                                                <SVGPath
-                                                        content="M28 41.45v-3.1q4.85-1.4 7.925-5.375T39 23.95q0-5.05-3.05-9.05-3.05-4-7.95-5.35v-3.1q6.2 1.4 10.1 6.275Q42 17.6 42 23.95t-3.9 11.225Q34.2 40.05 28 41.45ZM6 30V18h8L24 8v32L14 30Zm21 2.4V15.55q2.75.85 4.375 3.2T33 24q0 2.85-1.65 5.2T27 32.4Zm-6-16.8L15.35 21H9v6h6.35L21 32.45ZM16.3 24Z">
+                                                <SVGPath content="M28 41.45v-3.1q4.85-1.4 7.925-5.375T39 23.95q0-5.05-3.05-9.05-3.05-4-7.95-5.35v-3.1q6.2 1.4 10.1 6.275Q42 17.6 42 23.95t-3.9 11.225Q34.2 40.05 28 41.45ZM6 30V18h8L24 8v32L14 30Zm21 2.4V15.55q2.75.85 4.375 3.2T33 24q0 2.85-1.65 5.2T27 32.4Zm-6-16.8L15.35 21H9v6h6.35L21 32.45ZM16.3 24Z">
                                                     <styleClass>
-                                                        <String fx:value="SVGPath-mainPane"/>
-                                                        <String fx:value="SVGPath-searchPane"/>
-                                                        <String fx:value="SVGPath-listen"/>
+                                                        <String fx:value="SVGPath-mainPane" />
+                                                        <String fx:value="SVGPath-searchPane" />
+                                                        <String fx:value="SVGPath-listen" />
                                                     </styleClass>
                                                 </SVGPath>
                                             </graphic>
                                         </Button>
                                     </children>
                                 </VBox>
-                                <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0"
-                                        mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
-                                    <graphic>
-                                        <SVGPath
-                                                content="M42 13.85V39q0 1.2-.9 2.1-.9.9-2.1.9H9q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h25.15Zm-3 1.35L32.8 9H9v30h30ZM24 35.75q2.15 0 3.675-1.525T29.2 30.55q0-2.15-1.525-3.675T24 25.35q-2.15 0-3.675 1.525T18.8 30.55q0 2.15 1.525 3.675T24 35.75ZM11.65 18.8h17.9v-7.15h-17.9ZM9 15.2V39 9Z">
-                                            <styleClass>
-                                                <String fx:value="SVGPath-mainPane"/>
-                                                <String fx:value="SVGPath-searchPane"/>
-                                            </styleClass>
-                                        </SVGPath>
-                                    </graphic>
-                                </Button>
-                                <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0"
-                                        mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
-                                    <graphic>
-                                        <SVGPath
-                                                content="m11.65 44 4.65-15.2L4 20h15.2L24 4l4.8 16H44l-12.3 8.8L36.35 44 24 34.6Z">
-                                            <styleClass>
-                                                <String fx:value="SVGPath-mainPane"/>
-                                                <String fx:value="SVGPath-searchPane"/>
-                                            </styleClass>
-                                        </SVGPath>
-                                    </graphic>
-                                </Button>
-                                <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0"
-                                        mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
-                                    <graphic>
-                                        <SVGPath
-                                                content="M9 39h2.2l22.15-22.15-2.2-2.2L9 36.8Zm30.7-24.3-6.4-6.4 2.1-2.1q.85-.85 2.1-.85t2.1.85l2.2 2.2q.85.85.85 2.1t-.85 2.1Zm-2.1 2.1L12.4 42H6v-6.4l25.2-25.2Zm-5.35-1.05-1.1-1.1 2.2 2.2Z">
-                                            <styleClass>
-                                                <String fx:value="SVGPath-mainPane"/>
-                                                <String fx:value="SVGPath-searchPane"/>
-                                            </styleClass>
-                                        </SVGPath>
-                                    </graphic>
-                                </Button>
-                                <Button layoutX="170.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0"
-                                        minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
-                                    <graphic>
-                                        <SVGPath
-                                                content="M13.05 42q-1.2 0-2.1-.9-.9-.9-.9-2.1V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z">
-                                            <styleClass>
-                                                <String fx:value="SVGPath-mainPane"/>
-                                                <String fx:value="SVGPath-searchPane"/>
-                                            </styleClass>
-                                        </SVGPath>
-                                    </graphic>
-                                </Button>
+                                <HBox alignment="TOP_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                                    <children>
+                                        <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                                            <graphic>
+                                                <SVGPath content="M42 13.85V39q0 1.2-.9 2.1-.9.9-2.1.9H9q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h25.15Zm-3 1.35L32.8 9H9v30h30ZM24 35.75q2.15 0 3.675-1.525T29.2 30.55q0-2.15-1.525-3.675T24 25.35q-2.15 0-3.675 1.525T18.8 30.55q0 2.15 1.525 3.675T24 35.75ZM11.65 18.8h17.9v-7.15h-17.9ZM9 15.2V39 9Z">
+                                                    <styleClass>
+                                                        <String fx:value="SVGPath-mainPane" />
+                                                        <String fx:value="SVGPath-searchPane" />
+                                                    </styleClass>
+                                                </SVGPath>
+                                            </graphic>
+                                        </Button>
+                                        <Button fx:id="bookmarkButton" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#bookmarkAction" prefHeight="30.0" prefWidth="30.0">
+                                            <graphic>
+                                                <SVGPath content="m11.65 44 4.65-15.2L4 20h15.2L24 4l4.8 16H44l-12.3 8.8L36.35 44 24 34.6Z">
+                                                    <styleClass>
+                                                        <String fx:value="SVGPath-mainPane" />
+                                                        <String fx:value="SVGPath-searchPane" />
+                                                    </styleClass>
+                                                </SVGPath>
+                                            </graphic>
+                                        </Button>
+                                        <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                                            <graphic>
+                                                <SVGPath content="M9 39h2.2l22.15-22.15-2.2-2.2L9 36.8Zm30.7-24.3-6.4-6.4 2.1-2.1q.85-.85 2.1-.85t2.1.85l2.2 2.2q.85.85.85 2.1t-.85 2.1Zm-2.1 2.1L12.4 42H6v-6.4l25.2-25.2Zm-5.35-1.05-1.1-1.1 2.2 2.2Z">
+                                                    <styleClass>
+                                                        <String fx:value="SVGPath-mainPane" />
+                                                        <String fx:value="SVGPath-searchPane" />
+                                                    </styleClass>
+                                                </SVGPath>
+                                            </graphic>
+                                        </Button>
+                                        <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="30.0" prefWidth="30.0">
+                                            <graphic>
+                                                <SVGPath content="M13.05 42q-1.2 0-2.1-.9-.9-.9-.9-2.1V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z">
+                                                    <styleClass>
+                                                        <String fx:value="SVGPath-mainPane" />
+                                                        <String fx:value="SVGPath-searchPane" />
+                                                    </styleClass>
+                                                </SVGPath>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" top="10.0" />
+                                    </HBox.margin>
+                                </HBox>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="5.0"/>
+                                <Insets bottom="5.0" />
                             </VBox.margin>
                         </HBox>
                     </children>
@@ -114,7 +112,7 @@
         </AnchorPane>
     </children>
     <stylesheets>
-        <URL value="@../style/Search.css"/>
-        <URL value="@../style/Main.css"/>
+        <URL value="@../style/Search.css" />
+        <URL value="@../style/Main.css" />
     </stylesheets>
 </AnchorPane>

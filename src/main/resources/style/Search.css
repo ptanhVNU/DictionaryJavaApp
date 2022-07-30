@@ -24,6 +24,11 @@
     -fx-background-color: -background-color !important;
 }
 
+
+.button.active {
+    -fx-background-color: -background-color !important;
+}
+
 /*===================================SVG-PATH=====================================*/
 
 .SVGPath-searchPane {
