@@ -100,7 +100,7 @@ public class SearchController implements Initializable {
 
         searchWord.setText(searchList.getSelectionModel().getSelectedItem().getWord());
 
-        if (searchList.getSelectionModel().getSelectedItem().isBookmask()) {
+        if (searchList.getSelectionModel().getSelectedItem().isBookmark()) {
             bookmarkButton.getStyleClass().add("active");
         }
         else {
@@ -111,7 +111,7 @@ public class SearchController implements Initializable {
             historyDictionary.addNode(searchList.getSelectionModel().getSelectedItem());
         }
         else if (typeController.equals("bookmark")) {
-            System.out.println(searchList.getSelectionModel().getSelectedItem().isBookmask());
+            System.out.println(searchList.getSelectionModel().getSelectedItem().isBookmark());
         }
     }
 
@@ -121,8 +121,8 @@ public class SearchController implements Initializable {
             return;
         }
 
-        if (searchList.getSelectionModel().getSelectedItem().isBookmask()) {
-            searchList.getSelectionModel().getSelectedItem().setBookmask(false);
+        if (searchList.getSelectionModel().getSelectedItem().isBookmark()) {
+            searchList.getSelectionModel().getSelectedItem().setBookmark(false);
             bookmarkDictionary.dictionaryDeleteWord(searchList.getSelectionModel().getSelectedItem());
 
             bookmarkButton.getStyleClass().removeAll("active");
@@ -132,7 +132,7 @@ public class SearchController implements Initializable {
             }
         }
         else {
-            searchList.getSelectionModel().getSelectedItem().setBookmask(true);
+            searchList.getSelectionModel().getSelectedItem().setBookmark(true);
             bookmarkDictionary.addNode(searchList.getSelectionModel().getSelectedItem());
 
             bookmarkButton.getStyleClass().add("active");
