@@ -1,16 +1,18 @@
 package main;
 
+import data.DictionaryManagement;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.util.Objects;
 
 public class dictionaryApplication extends Application {
-
+    public static DictionaryManagement saveDictionary1;
+    public static DictionaryManagement saveDictionary2;
     public static void main(String[] args) {
         launch(args);
     }
@@ -21,5 +23,11 @@ public class dictionaryApplication extends Application {
         primaryStage.setTitle("Dictionary");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        dictionaryApplication.saveDictionary1.dictionaryExportToFile("src\\main\\resources\\data\\bookmarks.txt");
+        dictionaryApplication.saveDictionary2.dictionaryExportToFile("src\\main\\resources\\data\\history.txt");
     }
 }

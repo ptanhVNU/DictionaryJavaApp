@@ -21,21 +21,25 @@ import javafx.scene.control.Button;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
 public class SearchController implements Initializable {
-    final static String searchWordDefault = "Nghĩa của từ";
+    static final String searchWordDefault = "Nghĩa của từ";
     private String typeController;
-    @FXML
-    private TextField searchField;         // phần trong thanh tìm kiếm
-    @FXML
-    private ListView<Word> searchList;  // danh sách khi nhập từ
-    @FXML
-    private Label searchWord;             // hiển thị từ được tra
+    @FXML private TextField searchField; // phần trong thanh tìm kiếm
+    @FXML private ListView<Word> searchList; // danh sách khi nhập từ
+    @FXML private Label searchWord; // hiển thị từ được tra
 
-    @FXML
-    private Button bookmarkButton;
+    @FXML private Button bookmarkButton;
 
     private DictionaryManagement searchDictionary;
     private DictionaryManagement bookmarkDictionary;
     private DictionaryManagement historyDictionary;
+
+    public DictionaryManagement getBookmarkDictionary() {
+        return bookmarkDictionary;
+    }
+
+    public DictionaryManagement getHistoryDictionary() {
+        return historyDictionary;
+    }
 
     public String getTypeController() {
         return typeController;
@@ -78,19 +82,29 @@ public class SearchController implements Initializable {
         bookmarkDictionary = new DictionaryManagement();
         historyDictionary = new DictionaryManagement();
 
-         for (int i = 0; i < 1000; ++i) {
-             Word word = new Word();
-             searchDictionary.addNode(new Word("" + i));
-         }
+        for (int i = 0; i < 1000; ++i) {
+            Word word = new Word();
+            searchDictionary.addNode(new Word("" + i));
+        }
+
+        bookmarkDictionary.handleExport(
+                DictionaryManagement.dictonaryImportFromFile("src\\main\\resources\\data\\bookmarks.txt"),
+                searchDictionary);
+
+        historyDictionary.handleExport(
+                DictionaryManagement.dictonaryImportFromFile("src\\main\\resources\\data\\history.txt"),
+                searchDictionary);
 
         setTypeController("search");
     }
+
     @FXML
-    public void searchPressKeyBoard() {    // khi nhập từ
+    public void searchPressKeyBoard() { // khi nhập từ
         searchList.getItems().clear();
         String lookUp = searchField.getText();
         searchList.getItems().addAll(presentDictionary().dictionaryLookupPrefix(lookUp));
     }
+
     @FXML
     void choiceWordAction() {
         if (searchList.getSelectionModel().getSelectedItem() == null) {
@@ -102,15 +116,13 @@ public class SearchController implements Initializable {
 
         if (searchList.getSelectionModel().getSelectedItem().isBookmark()) {
             bookmarkButton.getStyleClass().add("active");
-        }
-        else {
+        } else {
             bookmarkButton.getStyleClass().removeAll("active");
         }
 
         if (typeController.equals("search")) {
             historyDictionary.addNode(searchList.getSelectionModel().getSelectedItem());
-        }
-        else if (typeController.equals("bookmark")) {
+        } else if (typeController.equals("bookmark")) {
             System.out.println(searchList.getSelectionModel().getSelectedItem().isBookmark());
         }
     }
@@ -130,8 +142,7 @@ public class SearchController implements Initializable {
             if (typeController == "bookmark") {
                 removeSelectedItemSearchList();
             }
-        }
-        else {
+        } else {
             searchList.getSelectionModel().getSelectedItem().setBookmark(true);
             bookmarkDictionary.addNode(searchList.getSelectionModel().getSelectedItem());
 
@@ -143,7 +154,6 @@ public class SearchController implements Initializable {
     void deleteAction() {
         searchDictionary.dictionaryDeleteWord(searchList.getSelectionModel().getSelectedItem());
         bookmarkDictionary.dictionaryDeleteWord(searchList.getSelectionModel().getSelectedItem());
-
         historyDictionary.dictionaryDeleteWord(searchList.getSelectionModel().getSelectedItem());
 
         removeSelectedItemSearchList();

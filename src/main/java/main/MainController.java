@@ -1,11 +1,9 @@
 package main;
 
-import data.Word;
-import data.DictionaryManagement;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
@@ -41,11 +39,7 @@ public class MainController implements Initializable {
     @FXML
     private Button settingButton;
 
-    DictionaryManagement searchDictionary;
-    DictionaryManagement bookmarkDictionary;
-    DictionaryManagement historyDictionary;
-
-//   khi click button ta sẽ xóa styleClass active khỏi toàn bộ button rồi thêm styleClass active vào button click
+    //   khi click button ta sẽ xóa styleClass active khỏi toàn bộ button rồi thêm styleClass active vào button click
     public void inactiveAllButton() {
         searchButton.getStyleClass().removeAll("active");
         translateButton.getStyleClass().removeAll("active");
@@ -94,6 +88,8 @@ public class MainController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Search.fxml"));
             searchPane = loader.load();
             searchController = loader.getController();
+            dictionaryApplication.saveDictionary1 = searchController.getBookmarkDictionary();
+            dictionaryApplication.saveDictionary2 = searchController.getHistoryDictionary();
         } catch (Exception e) {
             e.printStackTrace();
         }
