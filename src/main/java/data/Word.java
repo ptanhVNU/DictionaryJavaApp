@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Word {
   private String word;
 
-  private TextToSpeech toSpeech;
+  boolean bookmark;
 
   public static class Detail {
     private String word_type;
@@ -75,22 +75,16 @@ public class Word {
 
   public Word() {
     this.word = "";
-    toSpeech = new TextToSpeech("");
     details = new ArrayList<>();
   }
 
   public Word(String word) {
     this.word = word;
-    toSpeech = new TextToSpeech(word);
     details = new ArrayList<>();
   }
 
   public String getWord() {
     return word;
-  }
-
-  public TextToSpeech getToSpeech() {
-    return toSpeech;
   }
 
   public ArrayList<Detail> getDetails() {
@@ -101,12 +95,16 @@ public class Word {
     this.word = word;
   }
 
-  public void setToSpeech(TextToSpeech toSpeech) {
-    this.toSpeech = toSpeech;
-  }
-
   public void setDetails(ArrayList<Detail> details) {
     this.details = details;
+  }
+
+  public boolean isBookmark() {
+    return bookmark;
+  }
+
+  public void setBookmark(boolean bookmark) {
+    this.bookmark = bookmark;
   }
 
   public void addDetail(
@@ -118,7 +116,4 @@ public class Word {
     return this.getWord();
   }
 
-  public void Speech() {
-    toSpeech.speakText();
-  }
 }

@@ -109,7 +109,7 @@ public class Dictionary {
   }
 
   /** Searching a word from dictionary. */
-  public Word searchNode(String key) {
+  public Word searchWord(String key) {
     Trie pointer = root;
 
     for (int i = 0; i < key.length(); ++i) {
