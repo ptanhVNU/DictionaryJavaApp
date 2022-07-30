@@ -80,20 +80,27 @@ public class DictionaryManagement extends Dictionary {
   }
 
   /** dictionary Import from File */
-  public ArrayList<Word> dictonaryImportFromFile(String pathName) {
+  public static ArrayList<String> dictonaryImportFromFile(String pathName) {
     String dictionaryFilePath = pathName;
-    ArrayList<Word> list = new ArrayList<>();
+    ArrayList<String> list = new ArrayList<>();
     try {
       BufferedReader reader = new BufferedReader(new FileReader(dictionaryFilePath));
       String line;
       while ((line = reader.readLine()) != null) {
-        Word data = searchWord(line);
-        list.add(data);
+        list.add(line);
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
     return list;
+  }
+
+  /** find out on another Dictionary */
+  void handleExport(ArrayList<String> list, DictionaryManagement another) {
+    ArrayList<Word> words;
+    for (String key : list) {
+      dictionaryAddWord(another.searchWord(key));
+    }
   }
 
   /** delete Word String */
