@@ -2,7 +2,12 @@ package data;
 
 import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
 
+import javax.speech.Central;
+import javax.speech.EngineException;
+import javax.speech.synthesis.Synthesizer;
+import javax.speech.synthesis.SynthesizerModeDesc;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 
@@ -129,13 +134,13 @@ public class DictionaryManagement extends Dictionary {
 
   /** speak */
   public void speak(String text) {
-    TextToSpeech speech = new TextToSpeech(text);
-    speech.speakText();
+    TextToSpeech.setText(text);
+    TextToSpeech.speakText();
   }
 
   public void speakWord_target(int index) {
-    TextToSpeech speech = new TextToSpeech(wordList.get(index).getWord());
-    speech.speakText();
+    TextToSpeech.setText(wordList.get(index).getWord());
+    TextToSpeech.speakText();
   }
 
   public ArrayList<Word> dictionaryLookupPrefix(String key) {

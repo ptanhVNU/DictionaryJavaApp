@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 public class JDBCConnect {
-    final String url = "jdbc:mysql://localhost:3306/dictionary";
+    final String url = "jdbc:mysql:/tudien";
     String password = "matkhau123";
     String username = "root";
     static Dictionary dictionary = new Dictionary();
@@ -25,7 +25,7 @@ public class JDBCConnect {
 
             StringBuilder explanations = new StringBuilder();
             StringBuilder pronunciation = new StringBuilder();
-            String usages = "";
+            ArrayList<String> usages = new ArrayList<>();
             String[] res;
             res = detail.split(">");
             pronunciation.append(res[0]);
@@ -33,7 +33,7 @@ public class JDBCConnect {
                 if (res[i].startsWith("*") || res[i].startsWith("-")) {
                     explanations.append(res[i]).append("\n");
                 } else if (res[i].startsWith("=")){
-                    usages += (res[i] + "\n").replace("=", "");
+                    usages.add((res[i] + "\n").replace("=", ""));
                 }
             }
             Word word = new Word();
