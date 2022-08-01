@@ -1,37 +1,49 @@
 package data;
 
+import jdk.nashorn.internal.scripts.JD;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 
 public class JDBCConnect {
-    final String url = "jdbc:mysql://localhost:3306/dictionary_va";
+    final String url = "jdbc:mysql://localhost:3306/dictionary";
     String password = "matkhau123";
     String username = "root";
+    static Dictionary dictionary = new Dictionary();
 
     public ArrayList<Word> importDatabase() throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM english_vietnamese");
-        Dictionary dictionary = new Dictionary();
+        int index = 0;
         while (resultSet.next()) {
+
             String word_target = resultSet.getString("word");
-            // tách cột detail trong data base thành pronounce và word_explain
-            ResultSet resultSet_text = statement.executeQuery("select detail, substr(detail, 1, instr(detail, \">\")) as pronounce, " +
-                    "substr(detail, instr(detail, \">\")) as word_explain from english_vietnamese;");
-            int index = 0;
-            Word word = new Word();
-            word.setWord(word_target);
-            while (resultSet_text.next()) {
-                // set pronounce
-                String pronounce = resultSet_text.getString(2);
-                //
-                String explain = resultSet_text.getString(3);
-                word.details.get(index).setPronounciation(pronounce);
-                word.details.get(index).setExplanations(explain);
-                index++;
+            String detail = resultSet.getString("detail");
+
+
+            StringBuilder explanations = new StringBuilder();
+            StringBuilder pronunciation = new StringBuilder();
+            String usages = "";
+            String[] res;
+            res = detail.split(">");
+            pronunciation.append(res[0]);
+            for (int i = 1; i < res.length; i++) {
+                if (res[i].startsWith("*") || res[i].startsWith("-")) {
+                    explanations.append(res[i]).append("\n");
+                } else if (res[i].startsWith("=")){
+                    usages += (res[i] + "\n").replace("=", "");
+                }
             }
-            resultSet_text.close();
+            Word word = new Word();
+
+            word.setWord(word_target);
+            word.details.get(index).setPronounciation(pronunciation.toString());
+            word.details.get(index).setExplanations(explanations.toString());
+            word.details.get(index).setUsages(usages);
+            index++;
+            dictionary.wordList.add(word);
         }
         resultSet.close();
         statement.close();
@@ -40,7 +52,17 @@ public class JDBCConnect {
     }
 
     // hoan thien sau
-    public void exportDatabase(){
+    public void exportDatabase() {
 
+    }
+
+    public static void main(String[] args) throws SQLException {
+        JDBCConnect jdbcConnect = new JDBCConnect();
+        ArrayList<Word> words = jdbcConnect.importDatabase();
+
+        for (int i = 0; i < words.size(); i++) {
+            System.out.println(words.get(i).getWord());
+            System.out.println(words.get(i).getDetails());
+        }
     }
 }
