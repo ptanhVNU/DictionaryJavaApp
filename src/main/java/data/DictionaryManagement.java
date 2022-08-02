@@ -133,14 +133,12 @@ public class DictionaryManagement extends Dictionary {
   }
 
   /** speak */
-  public void speak(String text) {
-    TextToSpeech.setText(text);
-    TextToSpeech.speakText();
+  public void speak(String text) throws IOException {
+    TextToSpeech.speak(text);
   }
 
-  public void speakWord_target(int index) {
-    TextToSpeech.setText(wordList.get(index).getWord());
-    TextToSpeech.speakText();
+  public void speakWord_target(int index) throws IOException {
+      TextToSpeech.speak(wordList.get(index).getWord());
   }
 
   public ArrayList<Word> dictionaryLookupPrefix(String key) {

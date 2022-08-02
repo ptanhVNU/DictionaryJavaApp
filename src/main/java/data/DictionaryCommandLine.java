@@ -73,7 +73,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
     }
   }
 
-  public void speak() {
+  public void speak() throws IOException {
     String text = stringScanner();
     speak(text);
   }

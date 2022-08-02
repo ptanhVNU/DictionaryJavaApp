@@ -2,10 +2,11 @@ import data.Dictionary;
 import data.DictionaryCommandLine;
 import data.DictionaryManagement;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MainCommandline {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         DictionaryCommandLine dictionaryCMD = new DictionaryCommandLine();
         dictionaryCMD.insertFromFile("dictionaries.txt");
         boolean check = true;
