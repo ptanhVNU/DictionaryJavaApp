@@ -1,13 +1,7 @@
 package data;
 
-import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
-
-import javax.speech.Central;
-import javax.speech.EngineException;
-import javax.speech.synthesis.Synthesizer;
-import javax.speech.synthesis.SynthesizerModeDesc;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 
@@ -34,14 +28,14 @@ public class DictionaryManagement extends Dictionary {
       }
       Word data = new Word();
       data.setWord(target);
-      data.addDetail(null, explain, null, null);
+      data.addDetail(null, explain, null);
       wordList.add(data);
       addNode(data);
     }
   }
 
   /** insert From File. */
-  public void insertFromFile(String file) {
+  public void importFromFile(String file) {
     String dictionaryFilePath = "src/main/resources/data/" + file;
     try {
       BufferedReader reader = new BufferedReader(new FileReader(dictionaryFilePath));
@@ -50,7 +44,7 @@ public class DictionaryManagement extends Dictionary {
         String[] words = line.split("\t");
         Word word = new Word();
         word.setWord(words[0]);
-        word.addDetail(null, words[words.length - 1], null, null);
+        word.addDetail(null, words[words.length - 1], null);
         wordList.add(word);
         addNode(word);
       }
@@ -59,35 +53,7 @@ public class DictionaryManagement extends Dictionary {
     }
   }
 
-  /** dictionary Lookup. */
-  public Word dictionaryLookup(String lookUp) {
-    Word result = new Word();
-    result = searchWord(lookUp);
-    return result;
-  }
-
-  /**
-   * dictionary Export To File. TODO: flexiable file export
-   * String pathname
-   * = "E:\\ProjectJava\\Dictionary\\src\\main\\resources\\data\\dictionaries.txt";
-   */
-  public void dictionaryExportToFile(String pathName) {
-    setResultsList(new ArrayList<>());
-    getAllWord(root);
-    setWordList();
-    File file = new File(pathName);
-    try {
-      FileWriter myWriter = new FileWriter(file);
-      for (int i = 0; i < wordList.size(); i++) {
-        myWriter.write(wordList.get(i).getWord() + "\n");
-      }
-      myWriter.close();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  /** dictionary Import from File */
+  /** dictionary Import from File. */
   public static ArrayList<String> dictonaryImportFromFile(String pathName) {
     String dictionaryFilePath = pathName;
     ArrayList<String> list = new ArrayList<>();
@@ -107,8 +73,47 @@ public class DictionaryManagement extends Dictionary {
   public void handleExport(ArrayList<String> list, DictionaryManagement another) {
     ArrayList<Word> words;
     for (String key : list) {
-      dictionaryAddWord(another.searchWord(key));
+      dictionaryAddWord(another.findNode(key).getWord());
     }
+  }
+
+  /** insert db. */
+  public void dictionaryImportFromDatabase() {
+    try {
+      ArrayList<Word> list = JDBCConnect.importDatabase();
+      for (Word word : list) {
+        addNode(word);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /** dictionary Export To File. */
+  public void dictionaryExportToFile(String pathName) {
+    setResultsList(new ArrayList<>());
+    getAllWord(root);
+    setWordList();
+    File file = new File(pathName);
+    try {
+      FileWriter myWriter = new FileWriter(file);
+      for (int i = 0; i < wordList.size(); i++) {
+        myWriter.write(wordList.get(i).getWord() + "\n");
+      }
+      myWriter.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /** dictionary Export To Database. */
+  public void dictionaryExportToDatabase(String pathName) {
+
+  }
+
+  /** add word to dictionary */
+  public void dictionaryAddWord(Word data) {
+    addNode(data);
   }
 
   /** delete Word String */
@@ -121,7 +126,7 @@ public class DictionaryManagement extends Dictionary {
     return "Completed";
   }
 
-  /** delete Word Word */
+  /** delete Word. */
   public String dictionaryDeleteWord(Word data) {
     String key = data.getWord();
     Trie delelte = findNode(key);
@@ -132,15 +137,14 @@ public class DictionaryManagement extends Dictionary {
     return "Completed";
   }
 
-  /** speak */
-  public void speak(String text) throws IOException {
-    TextToSpeech.speak(text);
+  /** dictionary Lookup. */
+  public Word dictionaryLookup(String lookUp) {
+    Word result = new Word();
+    result = findNode(lookUp).getWord();
+    return result;
   }
 
-  public void speakWord_target(int index) throws IOException {
-      TextToSpeech.speak(wordList.get(index).getWord());
-  }
-
+  /** dictionary Lookup. */
   public ArrayList<Word> dictionaryLookupPrefix(String key) {
     setResultsList(new ArrayList<>());
     String msg = searchPrefixWord(key);
@@ -148,7 +152,5 @@ public class DictionaryManagement extends Dictionary {
     return wordList;
   }
 
-  public void dictionaryAddWord(Word data) {
-    addNode(data);
-  }
+
 }

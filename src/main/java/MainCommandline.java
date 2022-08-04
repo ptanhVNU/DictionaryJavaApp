@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class MainCommandline {
     public static void main(String[] args) throws IOException {
         DictionaryCommandLine dictionaryCMD = new DictionaryCommandLine();
-        dictionaryCMD.insertFromFile("dictionaries.txt");
+        dictionaryCMD.dictionaryImportFromDatabase();
         boolean check = true;
         Scanner scanner = new Scanner(System.in);
 

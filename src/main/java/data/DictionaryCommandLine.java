@@ -37,13 +37,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
 
     Word result = new Word();
     result = dictionaryLookup(search);
-    if (result == null) {
-      System.out.println("Not found");
-    } else {
-      System.out.printf("%-7s| %-20s| %-50s\n", "No", "English", "Vietnamese");
-      System.out.printf(
-          "%-7d| %-20s| %-50s\n", 1, result.getWord(), result.details.get(0).getExplanations());
-    }
+    System.out.println(result.showDetail());
   }
 
   public void deleteWord() {
@@ -75,7 +69,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
 
   public void speak() throws IOException {
     String text = stringScanner();
-    speak(text);
+    TextToSpeech.speak(text, true);
   }
 
   public void export() {

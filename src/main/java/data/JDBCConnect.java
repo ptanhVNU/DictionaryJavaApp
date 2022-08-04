@@ -1,68 +1,62 @@
 package data;
 
-import jdk.nashorn.internal.scripts.JD;
-
 import java.sql.*;
 import java.util.ArrayList;
 
-
 public class JDBCConnect {
-    final String url = "jdbc:mysql:/tudien";
-    String password = "matkhau123";
-    String username = "root";
-    static Dictionary dictionary = new Dictionary();
+  final static String url = "jdbc:mysql:/tudien";
+  static String password = "";
+  static String username = "root";
+  static ArrayList<Word> words = new ArrayList<>();
 
-    public ArrayList<Word> importDatabase() throws SQLException {
-        Connection connection = DriverManager.getConnection(url, username, password);
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM english_vietnamese");
-        int index = 0;
-        while (resultSet.next()) {
+  public static ArrayList<Word> importDatabase() throws SQLException {
+    Connection connection = DriverManager.getConnection(url, username, password);
+    Statement statement = connection.createStatement();
+    ResultSet resultSet = statement.executeQuery("SELECT * FROM english_vietnamese");
+    int index = 0;
+    int test = 10;
+    while (resultSet.next()) {
+      --test;
+      if (test == 0) break;
+      String idx = resultSet.getString("idx");
+      String word_target = resultSet.getString("word");
+      String detail = resultSet.getString("detail");
 
-            String word_target = resultSet.getString("word");
-            String detail = resultSet.getString("detail");
-
-
-            StringBuilder explanations = new StringBuilder();
-            StringBuilder pronunciation = new StringBuilder();
-            ArrayList<String> usages = new ArrayList<>();
-            String[] res;
-            res = detail.split(">");
-            pronunciation.append(res[0]);
-            for (int i = 1; i < res.length; i++) {
-                if (res[i].startsWith("*") || res[i].startsWith("-")) {
-                    explanations.append(res[i]).append("\n");
-                } else if (res[i].startsWith("=")){
-                    usages.add((res[i] + "\n").replace("=", ""));
-                }
-            }
-            Word word = new Word();
-
-            word.setWord(word_target);
-            word.details.get(index).setPronounciation(pronunciation.toString());
-            word.details.get(index).setExplanations(explanations.toString());
-            word.details.get(index).setUsages(usages);
-            index++;
-            dictionary.wordList.add(word);
+      ArrayList<String> usages = new ArrayList<>();
+      String[] res;
+      res = detail.split(">");
+      Word word = new Word();
+      word.setWord(word_target);
+      word.setPronounciation(res[0]);
+      Word.Detail temporaryDetail = new Word.Detail();
+      for (int i = 1; i < res.length; i++) {
+        if (res[i].startsWith("*")) {
+          temporaryDetail = new Word.Detail();
+          temporaryDetail.setWord_type(res[i]);
+        } else if (res[i].startsWith("-")) {
+          temporaryDetail.setExplanations(res[i]);
+        } else if (res[i].startsWith("=")) {
+          temporaryDetail.addUsages(res[i]);
         }
-        resultSet.close();
-        statement.close();
-        connection.close();
-        return dictionary.wordList;
+      }
+      word.addDetail(temporaryDetail);
+      words.add(word);
     }
+    resultSet.close();
+    statement.close();
+    connection.close();
+    return words;
+  }
 
-    // hoan thien sau
-    public void exportDatabase() {
+  // hoan thien sau
+  public void exportDatabase() {}
 
+  public static void main(String[] args) throws SQLException {
+    JDBCConnect jdbcConnect = new JDBCConnect();
+    ArrayList<Word> words = jdbcConnect.importDatabase();
+
+    for (int i = 0; i < words.size(); i++) {
+      // System.out.println(words.get(i).showDetail());
     }
-
-    public static void main(String[] args) throws SQLException {
-        JDBCConnect jdbcConnect = new JDBCConnect();
-        ArrayList<Word> words = jdbcConnect.importDatabase();
-
-        for (int i = 0; i < words.size(); i++) {
-            System.out.println(words.get(i).getWord());
-            System.out.println(words.get(i).getDetails());
-        }
-    }
+  }
 }

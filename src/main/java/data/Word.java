@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Word {
   private String word;
 
+  private String pronounciation;
   boolean bookmark;
 
   public static class Detail {
@@ -14,28 +15,23 @@ public class Word {
 
     private ArrayList<String> usages;
 
-    private String pronounciation;
-
     public Detail() {
       this.word_type = "";
       this.explanations = "";
       this.usages = new ArrayList<>();
-      this.pronounciation = "";
     }
 
     public Detail(
-        String word_type, String explanations, ArrayList<String> usages, String pronounciation) {
+        String word_type, String explanations, ArrayList<String> usages) {
       this.word_type = word_type;
       this.explanations = explanations;
       this.usages = usages;
-      this.pronounciation = pronounciation;
     }
 
     public Detail(Detail detail) {
       this.word_type = detail.getWord_type();
       this.explanations = detail.getExplanations();
       this.usages = detail.getUsages();
-      this.pronounciation = detail.getPronounciation();
     }
 
     public String getWord_type() {
@@ -50,10 +46,6 @@ public class Word {
       return explanations;
     }
 
-    public String getPronounciation() {
-      return pronounciation;
-    }
-
     public void setWord_type(String word_type) {
       this.word_type = word_type;
     }
@@ -62,16 +54,27 @@ public class Word {
       this.usages = usages;
     }
 
+    public void addUsages(String usages) {
+      this.usages.add(usages);
+    }
+
     public void setExplanations(String explanations) {
       this.explanations = explanations;
     }
 
-    public void setPronounciation(String pronounciation) {
-      this.pronounciation = pronounciation;
+    @Override
+    public String toString() {
+      StringBuilder reponse = new StringBuilder();
+      reponse.append(getWord_type() + '\n');
+      reponse.append(getExplanations() + '\n');
+      for (String request : this.usages) {
+        reponse.append(request);
+      }
+      return reponse.toString();
     }
   }
 
-  protected ArrayList<Detail> details;
+  protected ArrayList<Detail> details = new ArrayList<>();
 
   public Word() {
     this.word = "";
@@ -91,12 +94,20 @@ public class Word {
     return details;
   }
 
+  public String getPronounciation() {
+    return pronounciation;
+  }
+
   public void setWord(String word) {
     this.word = word;
   }
 
   public void setDetails(ArrayList<Detail> details) {
     this.details = details;
+  }
+
+  public void setPronounciation(String pronounciation) {
+    this.pronounciation = pronounciation;
   }
 
   public boolean isBookmark() {
@@ -108,12 +119,25 @@ public class Word {
   }
 
   public void addDetail(
-      String word_type, String explanations, ArrayList<String> usages, String pronounciation) {
-    details.add(new Detail(word_type, explanations, usages, pronounciation));
+      String word_type, String explanations, ArrayList<String> usages) {
+    details.add(new Detail(word_type, explanations, usages));
+  }
+
+  public void addDetail(Detail detail) {
+    details.add(detail);
   }
 
   public String toString() {
     return this.getWord();
   }
 
+  public String showDetail() {
+    StringBuilder reponse = new StringBuilder();
+    reponse.append(getWord() + '\n');
+    reponse.append(getPronounciation() + '\n');
+    for (Detail detail : getDetails()) {
+      reponse.append(detail.toString() + '\n');
+    }
+    return reponse.toString();
+  }
 }

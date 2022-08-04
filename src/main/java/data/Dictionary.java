@@ -108,20 +108,6 @@ public class Dictionary {
     return;
   }
 
-  /** Searching a word from dictionary. */
-  public Word searchWord(String key) {
-    Trie pointer = root;
-
-    for (int i = 0; i < key.length(); ++i) {
-      char character = key.charAt(i);
-      if (pointer.isExistInChildren(character) == null) {
-        return null;
-      }
-      pointer = pointer.isExistInChildren(character);
-    }
-    return pointer.word;
-  }
-
   /** Getting all of word in the Node of dictionary */
   public void getAllWord(Trie node) {
     if (node == null) {
