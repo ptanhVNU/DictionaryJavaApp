@@ -9,6 +9,7 @@ import static javax.sound.sampled.AudioFormat.Encoding.PCM_SIGNED;
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +17,11 @@ public class TextToSpeech {
   private static Map<String, String> langCode;
   private static SourceDataLine line;
 
-  private static int rate = 0; //-10 -> 10
+  private static int rate; //-10 -> 10
 
   private static String voice = "Linda"; //famale or male
 
-  private static float volume = 50; // 0 -> 200
+  private static float volume; // 0 -> 200
 
   private static boolean female;
 
@@ -42,11 +43,31 @@ public class TextToSpeech {
     TextToSpeech.volume = volume;
   }
 
+  public static float getPercentOfVolume() {
+    return getVolume() / 2;
+  }
+
+  public static void setPercentOfVolume(double percentOfVolume) {
+    setVolume((float) percentOfVolume * 2);
+  }
+
+  public static int getRate() {
+    return rate;
+  }
+
+  public static int getPercentOfRate() {
+    return (getRate() + 10) * 5;
+  }
+
   public static void setRate(int rate) {
     if (rate < -10 || rate > 10) {
       throw new IllegalArgumentException("must be in the range -10 to 10");
     }
     TextToSpeech.rate = rate;
+  }
+
+  public static void setPercentOfRate(double percentOfRate) {
+    setRate((int)percentOfRate / 5 - 10);
   }
 
   public static void setVoice(String lang) {
@@ -81,7 +102,7 @@ public class TextToSpeech {
                 + "&hl="
                 + URLEncoder.encode(langCode.get(lang), "UTF-8")
                 + "&r="
-                + URLEncoder.encode(String.valueOf(rate), "UTF-8")
+                + URLEncoder.encode(String.valueOf(getRate()), "UTF-8")
                 + "&f="
                 + URLEncoder.encode("44khz_16bit_stereo", "UTF-8"));
 
@@ -151,9 +172,41 @@ public class TextToSpeech {
     play("..\\DictionaryJavaApp\\src\\main\\resources\\data\\testAudio.mp3");
   }
 
+  public static void settingsExportToFile() {
+    File file = new File("src\\main\\resources\\data\\settings.txt");
+    try {
+      FileWriter myWriter = new FileWriter(file);
+      myWriter.write(isFemale() + "\n");
+      myWriter.write(getVolume() + "\n");
+      myWriter.write(getRate() + "\n");
+      myWriter.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static void settingsImportToFile() {
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(("src\\main\\resources\\data\\settings.txt")));
+      String s = reader.readLine();
+      if (s.equals("true")) {
+        setFemale(true);
+        } else {
+        setFemale(false);
+      }
+
+      setVolume(Float.parseFloat(reader.readLine()));
+      setRate(Integer.parseInt(reader.readLine()));
+
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public static void main(String[] argc) throws IOException {
-    speak("hello world");
-    setVolume(200);
-    speak("hello world");
+    settingsImportToFile();
+    System.out.println(isFemale());
+    System.out.println(getVolume());
+    System.out.println(getRate());
   }
 }
