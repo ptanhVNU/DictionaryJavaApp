@@ -1,5 +1,6 @@
 package main;
 
+import data.TextToSpeech;
 import data.TranslateAPI;
 
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.HashMap;
@@ -90,7 +92,6 @@ public class TranslateController implements Initializable {
 
   @FXML
   public void setValueLangFromChoiceAction(ActionEvent event) {
-    // khi setvalue langFrom giống langTo ta sẽ gán langTo bằng giá trị langFrom trước đó
     if (langFromChoice.getValue() == langToChoice.getValue()) {
       if (lastValueLangFromChoice == langFromChoice.getItems().get(0)) {
         if (langFromChoice.getValue() != langToChoice.getItems().get(0)) {
@@ -103,7 +104,6 @@ public class TranslateController implements Initializable {
       }
     }
 
-    // khi langFrom = "Phát hiện ngôn ngữ"(getItem().get(0)) thì ta vô hiệu hóa swapAction
     if (langFromChoice.getValue() == langFromChoice.getItems().get(0)) {
       swapLanguageButton.getStyleClass().add("disable");
     }
@@ -116,7 +116,8 @@ public class TranslateController implements Initializable {
 
   @FXML
   public void setValueLangToChoiceAction(ActionEvent event) {
-    // khi setvalue langTo giống langFrom ta sẽ gán langFrom bằng giá trị langTo trước đó
+    translationTextArea.setText("");
+    
     if (langToChoice.getValue() == langFromChoice.getValue()) {
       setValueLangFromChoice(lastValueLangToChoice);
     }
@@ -125,11 +126,29 @@ public class TranslateController implements Initializable {
   }
 
   @FXML
-  public void translateAction() { // khi click dịch văn bản
+  public void translateAction() {
     translationTextArea.setText(
         TranslateAPI.googleTranslate(
             exchange.get(langFromChoice.getValue()),
             exchange.get(langToChoice.getValue()),
             enterTextArea.getText()));
+  }
+
+  @FXML
+  public void speakLangFromAction() {
+      try {
+        TextToSpeech.speak(enterTextArea.getText(), langFromChoice.getValue());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+  }
+
+  @FXML
+  public void speakLangToAction() {
+    try {
+      TextToSpeech.speak(translationTextArea.getText(), langToChoice.getValue());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

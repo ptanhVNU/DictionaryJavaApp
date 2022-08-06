@@ -39,7 +39,6 @@ public class MainController implements Initializable {
     @FXML
     private Button settingButton;
 
-    //   khi click button ta sẽ xóa styleClass active khỏi toàn bộ button rồi thêm styleClass active vào button click
     public void inactiveAllButton() {
         searchButton.getStyleClass().removeAll("active");
         translateButton.getStyleClass().removeAll("active");

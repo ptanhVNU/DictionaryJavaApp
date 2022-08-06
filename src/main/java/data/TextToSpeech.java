@@ -9,8 +9,11 @@ import static javax.sound.sampled.AudioFormat.Encoding.PCM_SIGNED;
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TextToSpeech {
+  private static Map<String, String> langCode;
   private static SourceDataLine line;
 
   private static int rate = 0; //-10 -> 10
@@ -18,6 +21,18 @@ public class TextToSpeech {
   private static String voice = "Linda"; //famale or male
 
   private static float volume = 50; // 0 -> 200
+
+  private static boolean female;
+
+  static {
+    langCode = new HashMap<String, String>();
+    langCode.put("Phát hiện ngôn ngữ", "en-us");
+    langCode.put("English", "en-us");
+    langCode.put("Vietnamese", "vi-vn");
+    langCode.put("French", "fr-fr");
+    langCode.put("Japanese", "ja-jp");
+    langCode.put("Korean", "ko-kr");
+  }
 
   public static float getVolume() {
     return volume;
@@ -34,18 +49,26 @@ public class TextToSpeech {
     TextToSpeech.rate = rate;
   }
 
-  public static void setVoice(boolean female) {
-    if (female) {
+  public static void setVoice(String lang) {
+    if (isFemale()) {
       voice = "Linda";
     } else {
       voice = "John";
     }
   }
 
-  public static void generateMP3(String speakText, boolean female) throws IOException {
+  public static boolean isFemale() {
+    return female;
+  }
+
+  public static void setFemale(boolean female) {
+    TextToSpeech.female = female;
+  }
+
+  public static void generateMP3(String speakText, String lang) throws IOException {
     String APIKey = "07722e7f894c46dd94e7f03e6bc21a5f";
     byte[] stream;
-    setVoice(female);
+    setVoice(lang);
     URL url =
         new URL(
             "http://api.voicerss.org/?"
@@ -56,7 +79,7 @@ public class TextToSpeech {
                 + "&v="
                 + URLEncoder.encode(voice, "UTF-8")
                 + "&hl="
-                + URLEncoder.encode("en-us", "UTF-8")
+                + URLEncoder.encode(langCode.get(lang), "UTF-8")
                 + "&r="
                 + URLEncoder.encode(String.valueOf(rate), "UTF-8")
                 + "&f="
@@ -118,14 +141,19 @@ public class TextToSpeech {
     }
   }
 
-  public static void speak(String speakText, boolean female) throws IOException {
-    generateMP3(speakText, female);
+  public static void speak(String speakText, String lang) throws IOException {
+    generateMP3(speakText, lang);
+    play("..\\DictionaryJavaApp\\src\\main\\resources\\data\\testAudio.mp3");
+  }
+
+  public static void speak(String speakText) throws IOException {
+    generateMP3(speakText, "English");
     play("..\\DictionaryJavaApp\\src\\main\\resources\\data\\testAudio.mp3");
   }
 
   public static void main(String[] argc) throws IOException {
-    speak("hello world", false);
+    speak("hello world");
     setVolume(200);
-    speak("hello world", false);
+    speak("hello world");
   }
 }
