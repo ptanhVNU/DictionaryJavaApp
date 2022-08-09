@@ -56,16 +56,7 @@
                                 </VBox>
                                 <HBox alignment="TOP_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
                                     <children>
-                                        <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
-                                            <graphic>
-                                                <SVGPath content="M42 13.85V39q0 1.2-.9 2.1-.9.9-2.1.9H9q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h25.15Zm-3 1.35L32.8 9H9v30h30ZM24 35.75q2.15 0 3.675-1.525T29.2 30.55q0-2.15-1.525-3.675T24 25.35q-2.15 0-3.675 1.525T18.8 30.55q0 2.15 1.525 3.675T24 35.75ZM11.65 18.8h17.9v-7.15h-17.9ZM9 15.2V39 9Z">
-                                                    <styleClass>
-                                                        <String fx:value="SVGPath-mainPane" />
-                                                        <String fx:value="SVGPath-searchPane" />
-                                                    </styleClass>
-                                                </SVGPath>
-                                            </graphic>
-                                        </Button>
+                                        <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" />
                                         <Button fx:id="bookmarkButton" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#bookmarkAction" prefHeight="30.0" prefWidth="30.0">
                                             <graphic>
                                                 <SVGPath content="m11.65 44 4.65-15.2L4 20h15.2L24 4l4.8 16H44l-12.3 8.8L36.35 44 24 34.6Z">

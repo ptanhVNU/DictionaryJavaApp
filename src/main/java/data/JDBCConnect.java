@@ -47,22 +47,17 @@ public class JDBCConnect {
         connection.close();
         return words;
     }
-    resultSet.close();
-    statement.close();
-    connection.close();
-    return words;
-  }
 
-    public void exportDatabase(long size) throws SQLException {
+    public static void exportDatabase(ArrayList<Word> wordList) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary_va", username, password);
         connection.setAutoCommit(false);
         connection.getTransactionIsolation();
         PreparedStatement preparedStatement =
                 connection.prepareStatement("INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
-        for (int i = Dictionary.wordList.size() - 1; i >= size; i--) {
+        for (int i = wordList.size() - 1; i >= 0; i--) {
             preparedStatement.setInt(1, i-1);
-            preparedStatement.setString(2, Dictionary.wordList.get(i).getWord());
-            preparedStatement.setString(3, Dictionary.wordList.get(i).getDetails().toString());
+            preparedStatement.setString(2, wordList.get(i).getWord());
+            preparedStatement.setString(3, wordList.get(i).getDetails().toString());
             preparedStatement.addBatch();
         }
         preparedStatement.executeBatch();
@@ -73,8 +68,13 @@ public class JDBCConnect {
 
     public static void main(String[] args) throws SQLException {
         JDBCConnect jdbcConnect = new JDBCConnect();
-        Dictionary.wordList = importDatabase();
-        long size = Dictionary.wordList.size();
-        jdbcConnect.exportDatabase(size);
+        DictionaryManagement dictionaryManagement = new DictionaryManagement();
+        dictionaryManagement.dictionaryImportFromDatabase();
+
+        dictionaryManagement.getAllWord(dictionaryManagement.root);
+
+        for (int i = 0; i < 10; ++i) {
+            System.out.println(dictionaryManagement.getResultsList().get(i).getWord());
+        }
     }
 }

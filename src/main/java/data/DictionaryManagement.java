@@ -71,9 +71,12 @@ public class DictionaryManagement extends Dictionary {
 
   /** find out on another Dictionary */
   public void handleExport(ArrayList<String> list, DictionaryManagement another) {
-    ArrayList<Word> words;
     for (String key : list) {
-      dictionaryAddWord(another.findNode(key).getWord());
+      try {
+        dictionaryAddWord(another.findNode(key).getWord());
+      } catch (NullPointerException e) {
+        e.printStackTrace();
+      }
     }
   }
 
