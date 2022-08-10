@@ -27,7 +27,7 @@ public class JDBCConnect {
             res = detail.split(">");
             Word word = new Word();
             word.setWord(word_target);
-            word.setPronounciation(res[0]);
+            word.setPronunciation(res[0]);
             Word.Detail temporaryDetail = new Word.Detail();
             for (int i = 1; i < res.length; i++) {
                 if (res[i].startsWith("*")) {
