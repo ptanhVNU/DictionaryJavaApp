@@ -121,7 +121,7 @@ public class SearchController implements Initializable {
   @FXML
   public void choiceWordAction() {
     System.out.println("Word:           |" + searchList.getSelectionModel().getSelectedItem().getWord());
-    System.out.println("Pronounciation: |" + searchList.getSelectionModel().getSelectedItem().getPronounciation());
+    System.out.println("Pronounciation: |" + searchList.getSelectionModel().getSelectedItem().getPronunciation());
     for (int i = 0; i < searchList.getSelectionModel().getSelectedItem().getDetails().size(); ++i) {
       System.out.println("Word_type:      |" + searchList.getSelectionModel().getSelectedItem().getDetails().get(i).getWord_type());
       System.out.println("Explanations:   |" + searchList.getSelectionModel().getSelectedItem().getDetails().get(i).getExplanations());
