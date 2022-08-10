@@ -48,37 +48,59 @@ public class JDBCConnect {
         return words;
     }
 
-    // export database được gọi ngay sau khi thao tác thêm 1 từ mới từ giao diện
+        // export database được gọi ngay sau khi thao tác thêm 1 từ mới từ giao diện
     // thêm từ mới chỉ cần word_target và wơrd_explain
     // thêm vào cuối danh sách
-    public static void exportDatabase(ArrayList<Word> wordList, String choice) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary", username, password);
+    public static void insertToDatabase(ArrayList<Word> wordList) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary_va", username, password);
+        connection.setAutoCommit(false);
+        connection.getTransactionIsolation();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
+        preparedStatement.setInt(1, wordList.size() + 1);
+        preparedStatement.setString(2, wordList.get(wordList.size() - 1).getWord());
+        preparedStatement.setString(3, wordList.get(wordList.size() - 1).details.get(0).getExplanations());
+        preparedStatement.addBatch();
+
+        preparedStatement.executeBatch();
+        connection.commit();
+        preparedStatement.close();
+        connection.close();
+    }
+
+    // cần tìm index của từ cần sửa và xóa
+    
+    /**
+     * @param wordList danh sach
+     * @param choice   edit or delete
+     * @param index    index
+     * @throws SQLException loi SQL
+     */
+    public static void editDatabase(ArrayList<Word> wordList, String choice, int index) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary_va", username, password);
         connection.setAutoCommit(false);
         connection.getTransactionIsolation();
         PreparedStatement preparedStatement = null;
         switch (choice) {
-            case "add":
-                preparedStatement = connection.prepareStatement("INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
-                preparedStatement.setInt(1, wordList.size() + 1);
-                preparedStatement.setString(2, wordList.get(wordList.size() - 1).getWord());
-                preparedStatement.setString(3, wordList.get(wordList.size() - 1).details.get(0).getExplanations());
-                preparedStatement.addBatch();
-                break;
             case "edit":
-                //TO DO: sử dụng câu lệnh UPDATE employees
-                //SET
-                //    email = 'mary.patterson@classicmodelcars.com'
-                //WHERE
-                //    employeeNumber = 1056;
-                // cần tim được index của từ cần sửa1
+                String query = "UPDATE english_vietnamese SET detail = ? WHERE idx = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1,  wordList.get(index - 2).details.get(0).getExplanations());
+                preparedStatement.setInt(2, index);
+                preparedStatement.addBatch();
+                preparedStatement.executeBatch();
                 break;
             case "delete":
+                String sql = "DELETE FROM english_vietnamese WHERE idx = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, index);
+                preparedStatement.addBatch();
+                preparedStatement.executeBatch();
                 break;
             default:
-                System.out.println("error");
-        }
+                System.out.println("ERROR");
 
-        preparedStatement.executeBatch();
+        }
         connection.commit();
         preparedStatement.close();
         connection.close();
