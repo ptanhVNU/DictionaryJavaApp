@@ -20,9 +20,6 @@ public class MainController implements Initializable {
     private AnchorPane translatePane;
     @FXML
     private AnchorPane settingPane;
-
-    @FXML
-    private SearchController searchController;
     @FXML
     private TranslateController translateController;
     @FXML
@@ -52,7 +49,7 @@ public class MainController implements Initializable {
         mainContent.getChildren().setAll(searchPane);
         inactiveAllButton();
         searchButton.getStyleClass().add("active");
-        searchController.setTypeController("search");
+        SearchController.getInstance().setTypeController("search");
     }
     @FXML
     public void showTranslatePane() {
@@ -65,14 +62,14 @@ public class MainController implements Initializable {
         mainContent.getChildren().setAll(searchPane);
         inactiveAllButton();
         bookmarkButton.getStyleClass().add("active");
-        searchController.setTypeController("bookmark");
+        SearchController.getInstance().setTypeController("bookmark");
     }
     @FXML
     public void showHistoryPane() {
         mainContent.getChildren().setAll(searchPane);
         inactiveAllButton();
         historyButton.getStyleClass().add("active");
-        searchController.setTypeController("history");
+        SearchController.getInstance().setTypeController("history");
     }
     @FXML
     public void showSettingPane() {
@@ -86,9 +83,7 @@ public class MainController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Search.fxml"));
             searchPane = loader.load();
-            searchController = loader.getController();
-            dictionaryApplication.saveDictionary1 = searchController.getBookmarkDictionary();
-            dictionaryApplication.saveDictionary2 = searchController.getHistoryDictionary();
+            SearchController.setInstance(loader.getController());
         } catch (Exception e) {
             e.printStackTrace();
         }

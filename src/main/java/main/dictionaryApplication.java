@@ -12,12 +12,9 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class dictionaryApplication extends Application {
-    public static DictionaryManagement saveDictionary1;
-    public static DictionaryManagement saveDictionary2;
     public static void main(String[] args) {
         launch(args);
     }
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -31,7 +28,7 @@ public class dictionaryApplication extends Application {
     @Override
     public void stop() throws Exception {
         TextToSpeech.settingsExportToFile();
-        dictionaryApplication.saveDictionary1.dictionaryExportToFile("src\\main\\resources\\data\\bookmarks.txt");
-        dictionaryApplication.saveDictionary2.dictionaryExportToFile("src\\main\\resources\\data\\history.txt");
+        SearchController.getInstance().getBookmarkDictionary().dictionaryExportToFile("src\\main\\resources\\data\\bookmarks.txt");
+        SearchController.getInstance().getHistoryDictionary().dictionaryExportToFile("src\\main\\resources\\data\\history.txt");
     }
 }

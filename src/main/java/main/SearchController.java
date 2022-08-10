@@ -34,6 +34,8 @@ public class SearchController implements Initializable {
   private DictionaryManagement bookmarkDictionary;
   private DictionaryManagement historyDictionary;
 
+  private SearchController() {};
+
   public DictionaryManagement getBookmarkDictionary() {
     return bookmarkDictionary;
   }
@@ -44,6 +46,19 @@ public class SearchController implements Initializable {
 
   public String getTypeController() {
     return typeController;
+  }
+
+  private static SearchController instance;
+  public static SearchController getInstance() {
+    if (instance == null) {
+      SearchController.instance = new SearchController();
+    }
+
+    return SearchController.instance;
+  }
+
+  public static void setInstance(SearchController instance) {
+    SearchController.instance = instance;
   }
 
   @Setter
@@ -180,3 +195,5 @@ public class SearchController implements Initializable {
     removeSelectedItemSearchList();
   }
 }
+
+
