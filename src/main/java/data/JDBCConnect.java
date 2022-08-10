@@ -48,33 +48,39 @@ public class JDBCConnect {
         return words;
     }
 
-    public static void exportDatabase(ArrayList<Word> wordList) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary_va", username, password);
+    // export database được gọi ngay sau khi thao tác thêm 1 từ mới từ giao diện
+    // thêm từ mới chỉ cần word_target và wơrd_explain
+    // thêm vào cuối danh sách
+    public static void exportDatabase(ArrayList<Word> wordList, String choice) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary", username, password);
         connection.setAutoCommit(false);
         connection.getTransactionIsolation();
-        PreparedStatement preparedStatement =
-                connection.prepareStatement("INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
-        for (int i = wordList.size() - 1; i >= 0; i--) {
-            preparedStatement.setInt(1, i-1);
-            preparedStatement.setString(2, wordList.get(i).getWord());
-            preparedStatement.setString(3, wordList.get(i).getDetails().toString());
-            preparedStatement.addBatch();
+        PreparedStatement preparedStatement = null;
+        switch (choice) {
+            case "add":
+                preparedStatement = connection.prepareStatement("INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
+                preparedStatement.setInt(1, wordList.size() + 1);
+                preparedStatement.setString(2, wordList.get(wordList.size() - 1).getWord());
+                preparedStatement.setString(3, wordList.get(wordList.size() - 1).details.get(0).getExplanations());
+                preparedStatement.addBatch();
+                break;
+            case "edit":
+                //TO DO: sử dụng câu lệnh UPDATE employees
+                //SET
+                //    email = 'mary.patterson@classicmodelcars.com'
+                //WHERE
+                //    employeeNumber = 1056;
+                // cần tim được index của từ cần sửa1
+                break;
+            case "delete":
+                break;
+            default:
+                System.out.println("error");
         }
+
         preparedStatement.executeBatch();
         connection.commit();
         preparedStatement.close();
         connection.close();
-    }
-
-    public static void main(String[] args) throws SQLException {
-        JDBCConnect jdbcConnect = new JDBCConnect();
-        DictionaryManagement dictionaryManagement = new DictionaryManagement();
-        dictionaryManagement.dictionaryImportFromDatabase();
-
-        dictionaryManagement.getAllWord(dictionaryManagement.root);
-
-        for (int i = 0; i < 10; ++i) {
-            System.out.println(dictionaryManagement.getResultsList().get(i).getWord());
-        }
     }
 }
