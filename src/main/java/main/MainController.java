@@ -15,8 +15,6 @@ public class MainController implements Initializable {
     @FXML
     private AnchorPane mainContent;
     @FXML
-    private AnchorPane searchPane;
-    @FXML
     private AnchorPane translatePane;
     @FXML
     private AnchorPane settingPane;
@@ -46,7 +44,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void showSearchPane() {
-        mainContent.getChildren().setAll(searchPane);
+        mainContent.getChildren().setAll(SearchController.getPane());
         inactiveAllButton();
         searchButton.getStyleClass().add("active");
         SearchController.getInstance().setTypeController("search");
@@ -59,14 +57,14 @@ public class MainController implements Initializable {
     }
     @FXML
     public void showBookmarkPane() {
-        mainContent.getChildren().setAll(searchPane);
+        mainContent.getChildren().setAll(SearchController.getPane());
         inactiveAllButton();
         bookmarkButton.getStyleClass().add("active");
         SearchController.getInstance().setTypeController("bookmark");
     }
     @FXML
     public void showHistoryPane() {
-        mainContent.getChildren().setAll(searchPane);
+        mainContent.getChildren().setAll(SearchController.getPane());
         inactiveAllButton();
         historyButton.getStyleClass().add("active");
         SearchController.getInstance().setTypeController("history");
@@ -82,7 +80,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Search.fxml"));
-            searchPane = loader.load();
+            SearchController.setPane(loader.load());
             SearchController.setInstance(loader.getController());
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,6 +101,6 @@ public class MainController implements Initializable {
         }
 
         searchButton.getStyleClass().add("active");
-        mainContent.getChildren().setAll(searchPane);
+        mainContent.getChildren().setAll(SearchController.getPane());
     }
 }

@@ -1,7 +1,5 @@
 package main;
 
-import data.DictionaryManagement;
-
 import data.TextToSpeech;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +19,7 @@ public class dictionaryApplication extends Application {
         TextToSpeech.settingsImportToFile();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Main.fxml")));
         primaryStage.setTitle("Dictionary");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.show();
     }
 

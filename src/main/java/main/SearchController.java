@@ -5,13 +5,19 @@ import data.Word;
 import data.TextToSpeech;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
+
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -19,11 +25,17 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 
+
+import javafx.stage.Stage;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
 public class SearchController implements Initializable {
-  static final String searchWordDefault = "Nghĩa của từ";
+  static final String searchWordDefault = "Meaning";
+
+  static final String searchNotFound = "Not Found";
   private String typeController;
+
+  @FXML private static AnchorPane pane;
   @FXML private TextField searchField; // phần trong thanh tìm kiếm
   @FXML private ListView<Word> searchList; // danh sách khi nhập từ
   @FXML private Label searchWord; // hiển thị từ được tra
@@ -33,8 +45,6 @@ public class SearchController implements Initializable {
   private DictionaryManagement searchDictionary;
   private DictionaryManagement bookmarkDictionary;
   private DictionaryManagement historyDictionary;
-
-  private SearchController() {};
 
   public DictionaryManagement getBookmarkDictionary() {
     return bookmarkDictionary;
@@ -59,6 +69,14 @@ public class SearchController implements Initializable {
 
   public static void setInstance(SearchController instance) {
     SearchController.instance = instance;
+  }
+
+  public static AnchorPane getPane() {
+    return SearchController.pane;
+  }
+
+  public static void setPane(AnchorPane pane) {
+    SearchController.pane = pane;
   }
 
   @Setter
@@ -92,6 +110,16 @@ public class SearchController implements Initializable {
     searchWord.setText(searchWordDefault);
   }
 
+  public void initializeEditWordPane() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditWord.fxml"));
+      EditWordController.setPane(loader.load());
+      EditWordController.setInstance(loader.getController());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     searchDictionary = new DictionaryManagement();
@@ -109,6 +137,8 @@ public class SearchController implements Initializable {
         searchDictionary);
 
     setTypeController("search");
+
+  //  initializeEditWordPane();
   }
 
   @FXML
@@ -193,6 +223,27 @@ public class SearchController implements Initializable {
     historyDictionary.dictionaryDeleteWord(searchList.getSelectionModel().getSelectedItem());
 
     removeSelectedItemSearchList();
+  }
+
+  @FXML
+  public void editAction() throws Exception {
+    if (presentDictionary() != searchDictionary || searchWord.getText().equals(searchWordDefault)) {
+      return;
+    }
+
+    if (searchDictionary.findNode(searchWord.getText()) == null) {
+      searchDictionary.dictionaryAddWord(new Word(searchField.getText()));
+    }
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditWord.fxml"));
+    Parent root = loader.load();
+    Stage editStage = new Stage();
+    editStage.setScene(new Scene(root, 600, 500));
+    editStage.setTitle("Edit Word");
+    editStage.show();
+
+    EditWordController.setInstance(loader.getController());
+    EditWordController.getInstance().setEditWord(searchDictionary.dictionaryLookup(searchWord.getText()));
   }
 }
 
