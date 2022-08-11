@@ -31,6 +31,9 @@ public class JDBCConnect {
       Word.Detail temporaryDetail = new Word.Detail();
       for (int i = 1; i < res.length; i++) {
         if (res[i].startsWith("*")) {
+          if (i > 1) {
+            word.addDetail(temporaryDetail);
+          }
           temporaryDetail = new Word.Detail();
           temporaryDetail.setWord_type(res[i]);
         } else if (res[i].startsWith("-")) {
@@ -38,9 +41,8 @@ public class JDBCConnect {
         } else if (res[i].startsWith("=")) {
           temporaryDetail.addUsages(res[i]);
         }
-        word.addDetail(temporaryDetail);
       }
-
+      word.addDetail(temporaryDetail);
       words.add(word);
     }
     resultSet.close();
