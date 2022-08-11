@@ -1,6 +1,8 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Dictionary {
   protected ArrayList<Word> wordList = new ArrayList<>();
@@ -73,6 +75,37 @@ public class Dictionary {
       }
       children.add(new Trie(character));
     }
+
+    public void heapify(ArrayList<Trie> list, int n, int i) {
+      int largest = i;
+      int l = 2 * i + 1;
+      int r = 2 * i + 2;
+
+      if (l < n && list.get(l).character > list.get(largest).character) {
+        largest = l;
+      }
+
+      if (r < n && list.get(r).character > list.get(largest).character) {
+        largest = r;
+      }
+
+      if (largest != i) {
+        Collections.swap(list, i, largest);
+        heapify(list, n, largest);
+      }
+    }
+
+    public void sort() {
+      int n = children.size();
+      for (int i = n / 2 - 1; i >= 0; --i) {
+        heapify(children, n, i);
+      }
+
+      for (int i = n - 1; i > 0; --i) {
+        Collections.swap(children, 0, i);
+        heapify(children, i, 0);
+      }
+    }
   }
 
   public Trie root = new Trie();
@@ -105,6 +138,7 @@ public class Dictionary {
     }
 
     pointer.setWord(key);
+    pointer.sort();
     return;
   }
 

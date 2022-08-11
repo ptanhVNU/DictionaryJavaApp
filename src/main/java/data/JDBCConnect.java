@@ -27,7 +27,7 @@ public class JDBCConnect {
             res = detail.split(">");
             Word word = new Word();
             word.setWord(word_target);
-            word.setPronounciation(res[0]);
+            word.setPronunciation(res[0]);
             Word.Detail temporaryDetail = new Word.Detail();
             for (int i = 1; i < res.length; i++) {
                 if (res[i].startsWith("*")) {
@@ -48,33 +48,61 @@ public class JDBCConnect {
         return words;
     }
 
-    public static void exportDatabase(ArrayList<Word> wordList) throws SQLException {
+        // export database được gọi ngay sau khi thao tác thêm 1 từ mới từ giao diện
+    // thêm từ mới chỉ cần word_target và wơrd_explain
+    // thêm vào cuối danh sách
+    public static void insertToDatabase(ArrayList<Word> wordList) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary_va", username, password);
         connection.setAutoCommit(false);
         connection.getTransactionIsolation();
-        PreparedStatement preparedStatement =
-                connection.prepareStatement("INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
-        for (int i = wordList.size() - 1; i >= 0; i--) {
-            preparedStatement.setInt(1, i-1);
-            preparedStatement.setString(2, wordList.get(i).getWord());
-            preparedStatement.setString(3, wordList.get(i).getDetails().toString());
-            preparedStatement.addBatch();
-        }
+
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
+        preparedStatement.setInt(1, wordList.size() + 1);
+        preparedStatement.setString(2, wordList.get(wordList.size() - 1).getWord());
+        preparedStatement.setString(3, wordList.get(wordList.size() - 1).details.get(0).getExplanations());
+        preparedStatement.addBatch();
+
         preparedStatement.executeBatch();
         connection.commit();
         preparedStatement.close();
         connection.close();
     }
 
-    public static void main(String[] args) throws SQLException {
-        JDBCConnect jdbcConnect = new JDBCConnect();
-        DictionaryManagement dictionaryManagement = new DictionaryManagement();
-        dictionaryManagement.dictionaryImportFromDatabase();
+    // cần tìm index của từ cần sửa và xóa
+    
+    /**
+     * @param wordList danh sach
+     * @param choice   edit or delete
+     * @param index    index
+     * @throws SQLException loi SQL
+     */
+    public static void editDatabase(ArrayList<Word> wordList, String choice, int index) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dictionary_va", username, password);
+        connection.setAutoCommit(false);
+        connection.getTransactionIsolation();
+        PreparedStatement preparedStatement = null;
+        switch (choice) {
+            case "edit":
+                String query = "UPDATE english_vietnamese SET detail = ? WHERE idx = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1,  wordList.get(index - 2).details.get(0).getExplanations());
+                preparedStatement.setInt(2, index);
+                preparedStatement.addBatch();
+                preparedStatement.executeBatch();
+                break;
+            case "delete":
+                String sql = "DELETE FROM english_vietnamese WHERE idx = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, index);
+                preparedStatement.addBatch();
+                preparedStatement.executeBatch();
+                break;
+            default:
+                System.out.println("ERROR");
 
-        dictionaryManagement.getAllWord(dictionaryManagement.root);
-
-        for (int i = 0; i < 10; ++i) {
-            System.out.println(dictionaryManagement.getResultsList().get(i).getWord());
         }
+        connection.commit();
+        preparedStatement.close();
+        connection.close();
     }
 }
