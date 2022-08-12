@@ -1,13 +1,12 @@
 package data;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Dictionary {
-  protected ArrayList<Word> wordList = new ArrayList<>();
-
-  public Trie root = new Trie();
+  private Trie root = new Trie();
 
   private ArrayList<Word> resultsList = new ArrayList<>();
 
@@ -19,53 +18,73 @@ public class Dictionary {
     return resultsList;
   }
 
-  /** Adding a new word to dictionary. */
+  /**
+   *
+   *
+   * @param key keyword
+   * @exception NullPointerException not found key
+   */
   public void addNode(Word key) {
-    if (key == null) {
-      return;
-    }
+    try {
+      String key_word = key.getWord();
+      Trie pointer = root;
 
-    String key_word = key.getWord();
-    Trie pointer = root;
-
-    for (int i = 0; i < key_word.length(); ++i) {
-      char character = key_word.charAt(i);
-      if (pointer.isExistInChildren(character) == null) {
-        pointer.addChild(character);
+      for (int i = 0; i < key_word.length(); ++i) {
+        char character = key_word.charAt(i);
+        if (pointer.isExistInChildren(character) == null) {
+          pointer.addChild(character);
+        }
+        pointer = pointer.isExistInChildren(character);
       }
-      pointer = pointer.isExistInChildren(character);
-    }
 
-    pointer.setWord(key);
-    pointer.sort();
+      pointer.setWord(key);
+      pointer.sort();
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
+    }
     return;
   }
 
+  /**
+   * Works just like {@link Dictionary#getAllWord()} except the node is always presumed to be root.
+   *
+   * @see Dictionary#getAllWord()
+   */
   public void getAllWord() {
     getAllWord(root);
     return;
   }
 
-  /** Getting all of word in the Node of dictionary */
+  /**
+   * Get all word (Word class) from node to end.
+   *
+   * @param node start mode
+   * @exception NullPointerException not found node
+   */
   public void getAllWord(Trie node) {
-    if (node == null) {
-      return;
-    }
+    try {
+      if (node.getWord() != null) {
+        resultsList.add(node.getWord());
+      }
 
-    if (node.getWord() != null) {
-      resultsList.add(node.getWord());
-    }
+      if (node.getChildren() == null) {
+        return;
+      }
 
-    if (node.getChildren() == null) {
-      return;
-    }
-
-    for (Trie child : node.getChildren()) {
-      getAllWord(child);
+      for (Trie child : node.getChildren()) {
+        getAllWord(child);
+      }
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
     }
   }
 
-  /** Find out the node of word. */
+  /**
+   * Find out the node has word like key.
+   *
+   * @param key
+   * @return pointer if can find, otherwise null
+   */
   public Trie findNode(String key) {
     Trie pointer = root;
 
@@ -80,44 +99,49 @@ public class Dictionary {
     return pointer;
   }
 
-  /** Deleting a node (if this node.children empty, delete this node */
+  /**
+   * Deleting a node if children of this node is empty, delete this node.
+   *
+   * @param node
+   * @exception NullPointerException not found node
+   */
   public void deleteNode(Trie node) {
-    if (node == null) {
-      return;
-    }
+    try {
+      node.setWord(null);
 
-    node.setWord(null);
-
-    if (node.getChildren().isEmpty()) {
-      node = null;
+      if (node.getChildren().isEmpty()) {
+        node = new Trie();
+      }
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
     }
   }
 
-  public void setWordList() {
-    wordList = resultsList;
-  }
+  /**
+   * Find out all word have prefix key. List of word is resultsList (variable of class)
+   *
+   * @param key
+   * @exception NullPointerException not found key
+   */
+  public void searchPrefixWord(String key) {
+    try {
+      Trie pointer = root;
+      setResultsList(new ArrayList<>());
 
-  /** Find out all word have prefix key. */
-  public String searchPrefixWord(String key) {
-    if (key == null) {
-      return "Enter a key";
-    }
+      for (int i = 0; i < key.length(); ++i) {
+        char character = key.charAt(i);
+        if (pointer.isExistInChildren(character) == null) {
+          return;
+        }
 
-    Trie pointer = root;
-    setResultsList(new ArrayList<>());
-
-    for (int i = 0; i < key.length(); ++i) {
-      char character = key.charAt(i);
-      if (pointer.isExistInChildren(character) == null) {
-        return "Not found key";
+        pointer = pointer.isExistInChildren(character);
       }
 
-      pointer = pointer.isExistInChildren(character);
+      getAllWord(pointer);
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
     }
-
-    getAllWord(pointer);
-
-    return "resultsList";
+    return;
   }
 
   public static class Trie {
@@ -127,22 +151,31 @@ public class Dictionary {
 
     private Word word;
 
-    /** Contrucstor */
+    /** Constructor of Trie class. */
     public Trie() {}
 
-    /** Contrucstor */
+    /**
+     * Constructor of Trie class.
+     *
+     * @param character
+     */
     public Trie(char character) {
       this.character = character;
       word = null;
     }
 
-    /** Contrucstor */
+    /**
+     * Constructor of Trie class.
+     *
+     * @param character
+     * @param word
+     */
     public Trie(char character, Word word) {
       this.character = character;
       this.word = word;
     }
 
-    /** get-set-er */
+    /** get-set-er. */
     public ArrayList<Trie> getChildren() {
       return children;
     }
@@ -155,9 +188,8 @@ public class Dictionary {
       return word;
     }
 
-    public void setChildren(ArrayList<Trie> chirld) {
-
-      this.children = chirld;
+    public void setChildren(ArrayList<Trie> children) {
+      this.children = children;
     }
 
     public void setCharacter(char character) {
@@ -168,27 +200,50 @@ public class Dictionary {
       this.word = word;
     }
 
-    /** Find out Node has a character of key */
+    /**
+     * Find out Node has this character.
+     *
+     * @param character
+     * @return child of this has character
+     * @exception NullPointerException not found character
+     */
     public Trie isExistInChildren(char character) {
-      if (this.children == null) {
-        return null;
-      }
-      for (Trie child : this.children) {
-        if (child.getCharacter() == character) {
-          return child;
+      try {
+        if (this.children == null) {
+          return null;
         }
+        for (Trie child : this.children) {
+          if (child.getCharacter() == character) {
+            return child;
+          }
+        }
+      } catch (NullPointerException exception) {
+        exception.printStackTrace();
       }
       return null;
     }
 
-    /** Add Node if this character is not exist */
+    /**
+     * Add Node if this character is not exist.
+     *
+     * @param character
+     * @exception NullPointerException not found character
+     */
     public void addChild(char character) {
-      if (children == null) {
-        return;
+      try {
+        children.add(new Trie(character));
+      } catch (NullPointerException exception) {
+        exception.printStackTrace();
       }
-      children.add(new Trie(character));
     }
 
+    /**
+     * Make max-heap
+     *
+     * @param list
+     * @param n
+     * @param i
+     */
     public void heapify(ArrayList<Trie> list, int n, int i) {
       int largest = i;
       int l = 2 * i + 1;
@@ -208,6 +263,7 @@ public class Dictionary {
       }
     }
 
+    /** Sort Children of this. */
     public void sort() {
       int n = children.size();
       for (int i = n / 2 - 1; i >= 0; --i) {

@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.io.*;
 
 public class DictionaryManagement extends Dictionary {
-  /** insert From Command line. */
+  /** insert From Command line, enter nums word and info to add word to dictionary. */
   public void insertFromCommandline() {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Nhap so luong tu ban muon them: ");
@@ -29,12 +29,16 @@ public class DictionaryManagement extends Dictionary {
       Word data = new Word();
       data.setWord(target);
       data.addDetail(null, explain, null);
-      wordList.add(data);
       addNode(data);
     }
   }
 
-  /** insert From File. */
+  /**
+   * insert From File.
+   *
+   * @param file name of file get info
+   * @exception IOException if not found file
+   */
   public void importFromFile(String file) {
     String dictionaryFilePath = "src/main/resources/data/" + file;
     try {
@@ -45,7 +49,6 @@ public class DictionaryManagement extends Dictionary {
         Word word = new Word();
         word.setWord(words[0]);
         word.addDetail(null, words[words.length - 1], null);
-        wordList.add(word);
         addNode(word);
       }
     } catch (IOException e) {
@@ -53,7 +56,13 @@ public class DictionaryManagement extends Dictionary {
     }
   }
 
-  /** dictionary Import from File. */
+  /**
+   * get list of English word
+   *
+   * @param pathName path of file need to import
+   * @return list
+   * @exception IOException if not found file
+   */
   public static ArrayList<String> dictonaryImportFromFile(String pathName) {
     String dictionaryFilePath = pathName;
     ArrayList<String> list = new ArrayList<>();
@@ -69,7 +78,13 @@ public class DictionaryManagement extends Dictionary {
     return list;
   }
 
-  /** find out on another Dictionary */
+  /**
+   * find Word in another dictionary to add to "this" dictionary
+   *
+   * @param list list of key word
+   * @param another dictionary to search
+   * @exception NullPointerException if not found key word in the dictionary
+   */
   public void handleExport(ArrayList<String> list, DictionaryManagement another) {
     for (String key : list) {
       try {
@@ -80,7 +95,11 @@ public class DictionaryManagement extends Dictionary {
     }
   }
 
-  /** insert db. */
+  /**
+   * insert db.
+   *
+   * @exception SQLException sql err
+   */
   public void dictionaryImportFromDatabase() {
     try {
       ArrayList<Word> list = JDBCConnect.importDatabase();
@@ -92,16 +111,21 @@ public class DictionaryManagement extends Dictionary {
     }
   }
 
-  /** dictionary Export To File. */
+  /**
+   * Dictionary export key word to file.
+   *
+   * @param pathName path for export
+   * @exception IOException if not found file
+   * @throws RuntimeException err
+   */
   public void dictionaryExportToFile(String pathName) {
     setResultsList(new ArrayList<>());
-    getAllWord(root);
-    setWordList();
+    getAllWord();
     File file = new File(pathName);
     try {
       FileWriter myWriter = new FileWriter(file);
-      for (int i = 0; i < wordList.size(); i++) {
-        myWriter.write(wordList.get(i).getWord() + "\n");
+      for (int i = 0; i < getResultsList().size(); i++) {
+        myWriter.write(getResultsList().get(i).getWord() + "\n");
       }
       myWriter.close();
     } catch (IOException e) {
@@ -109,50 +133,82 @@ public class DictionaryManagement extends Dictionary {
     }
   }
 
-  /** dictionary Export To Database. */
-  public void dictionaryExportToDatabase(String pathName) {
-
-  }
-
-  /** add word to dictionary */
+  /**
+   * add word to dictionary
+   *
+   * @param data Word need to add
+   * @exception NullPointerException if not found data
+   */
   public void dictionaryAddWord(Word data) {
-    addNode(data);
-  }
-
-  /** delete Word String */
-  public String dictionaryDeleteString(String key) {
-    Trie delelte = findNode(key);
-    if (delelte == null) {
-      return "Not found key!";
+    try {
+      addNode(data);
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
     }
-    deleteNode(delelte);
-    return "Completed";
   }
 
-  /** delete Word. */
-  public String dictionaryDeleteWord(Word data) {
-    String key = data.getWord();
-    Trie delelte = findNode(key);
-    if (delelte == null) {
-      return "Not found key!";
+  /**
+   * delete Word String
+   *
+   * @param key key word of Word want delete
+   * @exception NullPointerException if not found key
+   */
+  public void dictionaryDeleteString(String key) {
+    try {
+      Trie delete = findNode(key);
+      deleteNode(delete);
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
     }
-    deleteNode(delelte);
-    return "Completed";
+    return;
   }
 
-  /** dictionary Lookup. */
+  /**
+   * delete Word
+   *
+   * @param data Word want delete
+   * @exception NullPointerException if not found key
+   */
+  public void dictionaryDeleteWord(Word data) {
+    try {
+      String key = data.getWord();
+      Trie delete = findNode(key);
+      deleteNode(delete);
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
+    }
+    return;
+  }
+
+  /**
+   * lookup word with string lookUp
+   *
+   * @param lookUp key word of Word want delete
+   * @exception NullPointerException if not found key
+   */
   public Word dictionaryLookup(String lookUp) {
     Word result = new Word();
-    result = findNode(lookUp).getWord();
+    try {
+      result = findNode(lookUp).getWord();
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
+    }
     return result;
   }
 
-  /** dictionary Lookup. */
+  /**
+   * delete Word String
+   *
+   * @param key key word of Word want delete
+   * @exception NullPointerException if not found key
+   */
   public ArrayList<Word> dictionaryLookupPrefix(String key) {
-    setResultsList(new ArrayList<>());
-    String msg = searchPrefixWord(key);
-    setWordList();
-    return wordList;
+    try {
+      setResultsList(new ArrayList<>());
+      searchPrefixWord(key);
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
+    }
+    return getResultsList();
   }
-
 }

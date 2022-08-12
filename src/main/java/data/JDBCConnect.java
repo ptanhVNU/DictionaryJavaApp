@@ -9,6 +9,12 @@ public class JDBCConnect {
   static String username = "root";
   static ArrayList<Word> words = new ArrayList<>();
 
+  /**
+   * Import Database for dictionary
+   *
+   * @return list of words to add other dictionary
+   * @throws SQLException
+   */
   public static ArrayList<Word> importDatabase() throws SQLException {
     Connection connection = DriverManager.getConnection(url, username, password);
     Statement statement = connection.createStatement();
@@ -51,60 +57,64 @@ public class JDBCConnect {
     return words;
   }
 
-  // export database được gọi ngay sau khi thao tác thêm 1 từ mới từ giao diện
-  // thêm từ mới chỉ cần word_target và wơrd_explain
-  // thêm vào cuối danh sách
-  public static void insertToDatabase(ArrayList<Word> wordList) throws SQLException {
-    Connection connection =
-        DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/dictionary_va", username, password);
+  /**
+   * import data
+   *
+   * @param word
+   * @throws SQLException
+   */
+  public static void insertToDatabase(Word word) throws SQLException {
+    Connection connection = DriverManager.getConnection(url, username, password);
+    Statement statement = connection.createStatement();
+    ResultSet resultSet =
+        statement.executeQuery("SELECT COUNT(detail) FROM english_vietnamese WHERE 1");
+    String count = resultSet.getString("COUNT(detail)");
     connection.setAutoCommit(false);
     connection.getTransactionIsolation();
 
     PreparedStatement preparedStatement =
         connection.prepareStatement(
             "INSERT INTO english_vietnamese (idx, word, detail) VALUES (?,?,?);");
-    preparedStatement.setInt(1, wordList.size() + 1);
-    preparedStatement.setString(2, wordList.get(wordList.size() - 1).getWord());
-    preparedStatement.setString(
-        3, wordList.get(wordList.size() - 1).details.get(0).getExplanations());
+    preparedStatement.setInt(1, Integer.parseInt(count) + 1);
+    preparedStatement.setString(2, word.getWord());
+    preparedStatement.setString(3, word.toStringDetail());
     preparedStatement.addBatch();
 
+    resultSet.close();
+    statement.close();
     preparedStatement.executeBatch();
     connection.commit();
     preparedStatement.close();
     connection.close();
   }
 
-  // cần tìm index của từ cần sửa và xóa
-
   /**
-   * @param wordList danh sach
+   * edit or delete on db
+   *
+   * @param word add
    * @param choice edit or delete
-   * @param index index
-   * @throws SQLException loi SQL
+   * @throws SQLException SQL err
    */
-  public static void editDatabase(ArrayList<Word> wordList, String choice, int index)
-      throws SQLException {
-    Connection connection =
-        DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/dictionary_va", username, password);
+  public static void editDatabase(Word word, String choice) throws SQLException {
+    Connection connection = DriverManager.getConnection(url, username, password);
+    String idx = "1";
     connection.setAutoCommit(false);
     connection.getTransactionIsolation();
     PreparedStatement preparedStatement = null;
+    System.out.println(choice);
     switch (choice) {
       case "edit":
         String query = "UPDATE english_vietnamese SET detail = ? WHERE idx = ?";
         preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, wordList.get(index - 2).details.get(0).getExplanations());
-        preparedStatement.setInt(2, index);
+        preparedStatement.setString(1, word.toStringDetail());
+        preparedStatement.setInt(2, Integer.parseInt(idx));
         preparedStatement.addBatch();
         preparedStatement.executeBatch();
         break;
       case "delete":
         String sql = "DELETE FROM english_vietnamese WHERE idx = ?";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, index);
+        preparedStatement.setInt(1, Integer.parseInt(idx));
         preparedStatement.addBatch();
         preparedStatement.executeBatch();
         break;

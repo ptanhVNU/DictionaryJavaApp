@@ -41,7 +41,7 @@ public class MainCommandline {
                     dictionaryCMD.showTranslateText();
                     break;
                 case 6:
-                    dictionaryCMD.speak();
+                    dictionaryCMD.test();
                     break;
                 default:
                     check = false;

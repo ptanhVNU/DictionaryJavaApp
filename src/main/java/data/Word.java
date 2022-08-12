@@ -6,6 +6,7 @@ public class Word {
   private String word;
 
   private String pronunciation;
+
   boolean bookmark;
 
   protected ArrayList<Detail> details = new ArrayList<>();
@@ -73,6 +74,11 @@ public class Word {
     return this.getWord();
   }
 
+  /**
+   * generate string with detail db format
+   *
+   * @return String detail db format
+   */
   public String toStringDetail() {
     StringBuilder reponse = new StringBuilder();
     reponse.append("@").append(this.getWord());
@@ -86,6 +92,11 @@ public class Word {
     return reponse.toString();
   }
 
+  /**
+   * show detail
+   *
+   * @return String detail
+   */
   public String showDetail() {
     StringBuilder reponse = new StringBuilder();
     reponse.append(getWord() + '\n');
