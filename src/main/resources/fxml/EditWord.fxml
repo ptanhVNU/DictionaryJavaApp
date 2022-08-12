@@ -7,9 +7,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="700.0" maxWidth="600.0" minHeight="700.0" minWidth="600.0" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.EditWordController">
+<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.EditWordController">
    <children>
-      <TreeView fx:id="treeView" layoutX="5.0" layoutY="14.0" maxHeight="490.0" maxWidth="600.0" minHeight="490.0" minWidth="600.0" prefHeight="490.0" prefWidth="600.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-      <VBox layoutY="500.0" maxHeight="195.0" maxWidth="600.0" minHeight="195.0" minWidth="600.0" prefHeight="195.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <TreeView fx:id="treeView" layoutX="5.0" layoutY="14.0" maxHeight="490.0" maxWidth="600.0" minHeight="490.0" minWidth="600.0" onContextMenuRequested="#selectAction" onMouseClicked="#selectAction" prefHeight="490.0" prefWidth="600.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <VBox layoutY="500.0" maxHeight="95.0" maxWidth="600.0" minHeight="95.0" minWidth="600.0" prefHeight="95.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <children>
+            <HBox fx:id="buttonHBox" prefHeight="155.0" prefWidth="590.0">
+               <children>
+                  <Button fx:id="button1" mnemonicParsing="false" onAction="#button1Action" text="Edit">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="button2" mnemonicParsing="false" onAction="#button2Action" text="Add ">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="editHBox" prefHeight="100.0" prefWidth="590.0">
+               <children>
+                  <TextField fx:id="editField" maxWidth="520.0" minWidth="520.0" prefWidth="520.0" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="Save">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
+         </children></VBox>
    </children>
 </AnchorPane>

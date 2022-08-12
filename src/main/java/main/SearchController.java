@@ -4,11 +4,11 @@ import data.DictionaryManagement;
 import data.Word;
 import data.TextToSpeech;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
-import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,16 +17,11 @@ import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-
-
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
 public class SearchController implements Initializable {
@@ -59,6 +54,7 @@ public class SearchController implements Initializable {
   }
 
   private static SearchController instance;
+
   public static SearchController getInstance() {
     if (instance == null) {
       SearchController.instance = new SearchController();
@@ -138,7 +134,7 @@ public class SearchController implements Initializable {
 
     setTypeController("search");
 
-  //  initializeEditWordPane();
+    //  initializeEditWordPane();
   }
 
   @FXML
@@ -150,13 +146,46 @@ public class SearchController implements Initializable {
 
   @FXML
   public void choiceWordAction() {
-    System.out.println("Word:           |" + searchList.getSelectionModel().getSelectedItem().getWord());
-    System.out.println("Pronounciation: |" + searchList.getSelectionModel().getSelectedItem().getPronunciation());
+    System.out.println(
+        "Word:           |" + searchList.getSelectionModel().getSelectedItem().getWord());
+    System.out.println(
+        "Pronounciation: |" + searchList.getSelectionModel().getSelectedItem().getPronunciation());
     for (int i = 0; i < searchList.getSelectionModel().getSelectedItem().getDetails().size(); ++i) {
-      System.out.println("Word_type:      |" + searchList.getSelectionModel().getSelectedItem().getDetails().get(i).getWord_type());
-      System.out.println("Explanations:   |" + searchList.getSelectionModel().getSelectedItem().getDetails().get(i).getExplanations());
-      for (int j = 0; j < searchList.getSelectionModel().getSelectedItem().getDetails().get(i).getUsages().size(); ++j) {
-        System.out.println("Usages:         |" + searchList.getSelectionModel().getSelectedItem().getDetails().get(i).getUsages().get(j));
+      System.out.println(
+          "Word_type:      |"
+              + searchList
+                  .getSelectionModel()
+                  .getSelectedItem()
+                  .getDetails()
+                  .get(i)
+                  .getWord_type());
+      System.out.println(
+          "Explanations:   |"
+              + searchList
+                  .getSelectionModel()
+                  .getSelectedItem()
+                  .getDetails()
+                  .get(i)
+                  .getExplanations());
+      for (int j = 0;
+          j
+              < searchList
+                  .getSelectionModel()
+                  .getSelectedItem()
+                  .getDetails()
+                  .get(i)
+                  .getUsages()
+                  .size();
+          ++j) {
+        System.out.println(
+            "Usages:         |"
+                + searchList
+                    .getSelectionModel()
+                    .getSelectedItem()
+                    .getDetails()
+                    .get(i)
+                    .getUsages()
+                    .get(j));
       }
     }
 
@@ -227,7 +256,9 @@ public class SearchController implements Initializable {
 
   @FXML
   public void editAction() throws Exception {
-    if (presentDictionary() != searchDictionary || searchWord.getText().equals(searchWordDefault)) {
+    if (presentDictionary() != searchDictionary
+        || searchWord.getText().equals(searchWordDefault)
+        || EditWordController.getInstance().isRunning()) {
       return;
     }
 
@@ -238,13 +269,31 @@ public class SearchController implements Initializable {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditWord.fxml"));
     Parent root = loader.load();
     Stage editStage = new Stage();
-    editStage.setScene(new Scene(root, 600, 500));
+    editStage.setScene(new Scene(root, 600, 600));
     editStage.setTitle("Edit Word");
+
+    editStage.setOnCloseRequest(
+        new EventHandler<WindowEvent>() {
+          @Override
+          public void handle(WindowEvent event) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("");
+            alert.setHeaderText(null);
+            alert.setContentText("Do you want to save");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+              EditWordController.getInstance().convertTreeViewToWord();
+              EditWordController.getInstance().setRunning(false);
+              editStage.close();
+            }
+          }
+        });
+
     editStage.show();
 
     EditWordController.setInstance(loader.getController());
-    EditWordController.getInstance().setEditWord(searchDictionary.dictionaryLookup(searchWord.getText()));
+    EditWordController.getInstance()
+        .setEditWord(searchDictionary.dictionaryLookup(searchWord.getText()));
+    EditWordController.getInstance().setRunning(true);
   }
 }
-
-
