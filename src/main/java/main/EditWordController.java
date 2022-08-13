@@ -70,62 +70,35 @@ public class EditWordController implements Initializable {
   }
 
   public void convertWordToTreeView(Word word) {
-    TreeItem<String> rootItem = new TreeItem<>(word.getWord());
+    TreeItem<String> rootItem = CovertTreeViewAndWord.covertWordToTreeItem(word);
     treeView.setRoot(rootItem);
-
-    for (int i = 0; i < word.getDetails().size(); ++i) {
-      TreeItem<String> treeItem = new TreeItem<String>("Detail : " + (i + 1));
-      treeItem
-          .getChildren()
-          .add(new TreeItem<String>("Word Type : " + word.getDetails().get(i).getWord_type()));
-      treeItem
-          .getChildren()
-          .add(
-              new TreeItem<String>("Explanations : " + word.getDetails().get(i).getExplanations()));
-
-      if (word.getDetails().get(i).getUsages().isEmpty()) {
-        treeItem.getChildren().add(new TreeItem<String>("Usages : none"));
-      } else {
-        TreeItem<String> usagesItem = new TreeItem<String>("Usages :");
-
-        for (int j = 0; j < word.getDetails().get(i).getUsages().size(); ++j) {
-          usagesItem
-              .getChildren()
-              .add(new TreeItem<String>("-" + word.getDetails().get(i).getUsages().get(j)));
-        }
-
-        treeItem.getChildren().add(usagesItem);
-      }
-
-      rootItem.getChildren().add(treeItem);
-    }
   }
 
   public void convertTreeViewToWord() {
-    editWord.getDetails().clear();
-
-    for (int i = 0; i < treeView.getRoot().getChildren().size(); ++i) {
-      TreeItem<String> Detail = (TreeItem<String>) treeView.getRoot().getChildren().get(i);
-      editWord.addDetail(
-          Detail.getChildren().get(0).getValue().substring(12),
-          Detail.getChildren().get(1).getValue().substring(15),
-          new ArrayList<String>());
-
-      for (int j = 0;
-          j < ((TreeItem<String>) Detail.getChildren().get(2)).getChildren().size();
-          ++j) {
-        editWord
-            .getDetails()
-            .get(i)
-            .getUsages()
-            .add(
-                ((TreeItem<String>) Detail.getChildren().get(2))
-                    .getChildren()
-                    .get(j)
-                    .getValue()
-                    .substring(1));
-      }
-    }
+//    editWord.getDetails().clear();
+//
+//    for (int i = 0; i < treeView.getRoot().getChildren().size(); ++i) {
+//      TreeItem<String> Detail = (TreeItem<String>) treeView.getRoot().getChildren().get(i);
+//      editWord.addDetail(
+//          Detail.getChildren().get(0).getValue().substring(12),
+//          Detail.getChildren().get(1).getValue().substring(15),
+//          new ArrayList<String>());
+//
+//      for (int j = 0;
+//          j < ((TreeItem<String>) Detail.getChildren().get(2)).getChildren().size();
+//          ++j) {
+//        editWord
+//            .getDetails()
+//            .get(i)
+//            .getUsages()
+//            .add(
+//                ((TreeItem<String>) Detail.getChildren().get(2))
+//                    .getChildren()
+//                    .get(j)
+//                    .getValue()
+//                    .substring(1));
+//      }
+//    }
   }
 
   @Override

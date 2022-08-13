@@ -1,61 +1,13 @@
 package data;
 
+import jdk.nashorn.internal.scripts.JD;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
 public class DictionaryManagement extends Dictionary {
-  /** insert From Command line, enter nums word and info to add word to dictionary. */
-  public void insertFromCommandline() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.print("Nhap so luong tu ban muon them: ");
-    int numsWord;
-    numsWord = Integer.parseInt(scanner.nextLine());
-
-    for (int i = 0; i < numsWord; i++) {
-      System.out.print("English: ");
-      String target = scanner.nextLine();
-      if (target.equals("")) {
-        System.out.println("No target");
-        break;
-      }
-      System.out.print("Vietnamese: ");
-      String explain = scanner.nextLine();
-      if (explain.equals("")) {
-        System.out.println("No explain");
-        break;
-      }
-      Word data = new Word();
-      data.setWord(target);
-      data.addDetail(null, explain, null);
-      addNode(data);
-    }
-  }
-
-  /**
-   * insert From File.
-   *
-   * @param file name of file get info
-   * @exception IOException if not found file
-   */
-  public void importFromFile(String file) {
-    String dictionaryFilePath = "src/main/resources/data/" + file;
-    try {
-      BufferedReader reader = new BufferedReader(new FileReader(dictionaryFilePath));
-      String line;
-      while ((line = reader.readLine()) != null) {
-        String[] words = line.split("\t");
-        Word word = new Word();
-        word.setWord(words[0]);
-        word.addDetail(null, words[words.length - 1], null);
-        addNode(word);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
   /**
    * get list of English word
    *
@@ -63,7 +15,7 @@ public class DictionaryManagement extends Dictionary {
    * @return list
    * @exception IOException if not found file
    */
-  public static ArrayList<String> dictonaryImportFromFile(String pathName) {
+  public static ArrayList<String> dictionaryImportFromFile(String pathName) {
     String dictionaryFilePath = pathName;
     ArrayList<String> list = new ArrayList<>();
     try {
@@ -138,11 +90,13 @@ public class DictionaryManagement extends Dictionary {
    *
    * @param data Word need to add
    * @exception NullPointerException if not found data
+   * @exception SQLException if err SQL
    */
   public void dictionaryAddWord(Word data) {
     try {
+      JDBCConnect.insertToDatabase(data);
       addNode(data);
-    } catch (NullPointerException exception) {
+    } catch (NullPointerException | SQLException exception) {
       exception.printStackTrace();
     }
   }
@@ -152,12 +106,14 @@ public class DictionaryManagement extends Dictionary {
    *
    * @param key key word of Word want delete
    * @exception NullPointerException if not found key
+   * @exception SQLException if err SQL
    */
   public void dictionaryDeleteString(String key) {
     try {
       Trie delete = findNode(key);
+      JDBCConnect.editDatabase(delete.getWord(), "delete");
       deleteNode(delete);
-    } catch (NullPointerException exception) {
+    } catch (NullPointerException | SQLException exception) {
       exception.printStackTrace();
     }
     return;
@@ -168,13 +124,15 @@ public class DictionaryManagement extends Dictionary {
    *
    * @param data Word want delete
    * @exception NullPointerException if not found key
+   * @exception SQLException if err SQL
    */
   public void dictionaryDeleteWord(Word data) {
     try {
+      JDBCConnect.editDatabase(data, "delete");
       String key = data.getWord();
       Trie delete = findNode(key);
       deleteNode(delete);
-    } catch (NullPointerException exception) {
+    } catch (NullPointerException | SQLException exception) {
       exception.printStackTrace();
     }
     return;
@@ -210,5 +168,14 @@ public class DictionaryManagement extends Dictionary {
       exception.printStackTrace();
     }
     return getResultsList();
+  }
+
+  public void dictionaryEditWord(Word word) {
+    try {
+      dictionaryLookup(word.getWord()).edit(word);
+      JDBCConnect.editDatabase(word, "edit");
+    } catch (SQLException exception) {
+      exception.printStackTrace();
+    }
   }
 }

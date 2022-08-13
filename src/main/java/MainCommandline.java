@@ -17,10 +17,10 @@ public class MainCommandline {
                     "\t0. Thoát\n" +
                     "\t1. Xem từ điển\n" +
                     "\t2. Tìm từ\n" +
-                    "\t3. Thêm từ mới\n" +
-                    "\t4. Xoá từ\n" +
-                    "\t5. Dịch văn bản\n" +
-                    "\t6. Test prefix\n" +
+                    "\t3. toStringDetail\n" +
+                    "\t4. check\n" +
+                    "\t5. edit\n" +
+                    "\t6. add\n" +
                     "Chọn thao tác: ", "------- DICTIONARY JAVA APP -------");
             int select;
             select = Integer.parseInt(scanner.nextLine());
@@ -32,21 +32,24 @@ public class MainCommandline {
                     dictionaryCMD.dictionarySearcher();
                     break;
                 case 3:
-                    dictionaryCMD.dictionaryBasic();
+                    dictionaryCMD.testShowDetail();
                     break;
                 case 4:
-                    dictionaryCMD.deleteWord();
+                    dictionaryCMD.check();
                     break;
                 case 5:
-                    dictionaryCMD.showTranslateText();
+                    dictionaryCMD.testEdit();
                     break;
                 case 6:
-                    dictionaryCMD.test();
+                    dictionaryCMD.testAdd();
                     break;
                 default:
                     check = false;
                     break;
             }
         }
+
     }
+
+
 }

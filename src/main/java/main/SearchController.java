@@ -125,11 +125,11 @@ public class SearchController implements Initializable {
     searchDictionary.dictionaryImportFromDatabase();
 
     bookmarkDictionary.handleExport(
-        DictionaryManagement.dictonaryImportFromFile("src\\main\\resources\\data\\bookmarks.txt"),
+        DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\bookmarks.txt"),
         searchDictionary);
 
     historyDictionary.handleExport(
-        DictionaryManagement.dictonaryImportFromFile("src\\main\\resources\\data\\history.txt"),
+        DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\history.txt"),
         searchDictionary);
 
     setTypeController("search");
@@ -146,51 +146,6 @@ public class SearchController implements Initializable {
 
   @FXML
   public void choiceWordAction() {
-    System.out.println(
-        "Word:           |" + searchList.getSelectionModel().getSelectedItem().getWord());
-    System.out.println(
-        "Pronounciation: |" + searchList.getSelectionModel().getSelectedItem().getPronunciation());
-    for (int i = 0; i < searchList.getSelectionModel().getSelectedItem().getDetails().size(); ++i) {
-      System.out.println(
-          "Word_type:      |"
-              + searchList
-                  .getSelectionModel()
-                  .getSelectedItem()
-                  .getDetails()
-                  .get(i)
-                  .getWord_type());
-      System.out.println(
-          "Explanations:   |"
-              + searchList
-                  .getSelectionModel()
-                  .getSelectedItem()
-                  .getDetails()
-                  .get(i)
-                  .getExplanations());
-      for (int j = 0;
-          j
-              < searchList
-                  .getSelectionModel()
-                  .getSelectedItem()
-                  .getDetails()
-                  .get(i)
-                  .getUsages()
-                  .size();
-          ++j) {
-        System.out.println(
-            "Usages:         |"
-                + searchList
-                    .getSelectionModel()
-                    .getSelectedItem()
-                    .getDetails()
-                    .get(i)
-                    .getUsages()
-                    .get(j));
-      }
-    }
-
-    System.out.println("");
-
     if (searchList.getSelectionModel().getSelectedItem() == null) {
       bookmarkButton.getStyleClass().removeAll("active");
       return;
