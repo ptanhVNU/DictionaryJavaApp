@@ -29,7 +29,7 @@
             </children>
         </AnchorPane>
 
-        <AnchorPane layoutX="270.0" maxHeight="600.0" maxWidth="540.0" minHeight="600.0" minWidth="540.0" prefHeight="600.0" prefWidth="540.0">
+        <AnchorPane layoutX="270.0" maxHeight="600.0" maxWidth="540.0" minHeight="600.0" minWidth="540.0" prefHeight="600.0" prefWidth="540.0" style="-fx-background-color: white;">
             <children>
                 <VBox maxHeight="600.0" maxWidth="525.0" minHeight="600.0" minWidth="525.0" prefHeight="600.0" prefWidth="525.0" AnchorPane.bottomAnchor="7.5" AnchorPane.leftAnchor="7.5" AnchorPane.rightAnchor="7.5" AnchorPane.topAnchor="7.5">
                     <children>

@@ -72,3 +72,35 @@
 .SVGPath-swap {
     -fx-fill: -text-color;
 }
+
+/*================================TEXT-AREA===========================*/
+
+.text-area {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area:focused {
+    -fx-highlight-fill: #7ecfff;
+    -fx-background-color: transparent, white, transparent, white;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: #A9A9A9;
+}
+
+.text-area .content {
+    -fx-padding: 10px;
+    -fx-text-fill: gray;
+    -fx-highlight-fill: #7ecfff;
+}
+
+.Hbox-translate {
+    -fx-background-color: -background-color;
+}
