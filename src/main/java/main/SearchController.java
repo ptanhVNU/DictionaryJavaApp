@@ -125,12 +125,12 @@ public class SearchController implements Initializable {
     searchDictionary.dictionaryImportFromDatabase();
 
     bookmarkDictionary.handleExport(
-        DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\bookmarks.txt"),
-        searchDictionary);
+            DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\bookmarks.txt"),
+            searchDictionary);
 
     historyDictionary.handleExport(
-        DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\history.txt"),
-        searchDictionary);
+            DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\history.txt"),
+            searchDictionary);
 
     setTypeController("search");
 
@@ -212,8 +212,8 @@ public class SearchController implements Initializable {
   @FXML
   public void editAction() throws Exception {
     if (presentDictionary() != searchDictionary
-        || searchWord.getText().equals(searchWordDefault)
-        || EditWordController.getInstance().isRunning()) {
+            || searchWord.getText().equals(searchWordDefault)
+            || EditWordController.getInstance().isRunning()) {
       return;
     }
 
@@ -228,27 +228,27 @@ public class SearchController implements Initializable {
     editStage.setTitle("Edit Word");
 
     editStage.setOnCloseRequest(
-        new EventHandler<WindowEvent>() {
-          @Override
-          public void handle(WindowEvent event) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("");
-            alert.setHeaderText(null);
-            alert.setContentText("Do you want to save");
+            new EventHandler<WindowEvent>() {
+              @Override
+              public void handle(WindowEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("");
+                alert.setHeaderText(null);
+                alert.setContentText("Do you want to save");
 
-            if (alert.showAndWait().get() == ButtonType.OK) {
-              EditWordController.getInstance().convertTreeViewToWord();
-              EditWordController.getInstance().setRunning(false);
-              editStage.close();
-            }
-          }
-        });
+                if (alert.showAndWait().get() == ButtonType.OK) {
+                  EditWordController.getInstance().convertTreeViewToWord();
+                  EditWordController.getInstance().setRunning(false);
+                  editStage.close();
+                }
+              }
+            });
 
     editStage.show();
 
     EditWordController.setInstance(loader.getController());
     EditWordController.getInstance()
-        .setEditWord(searchDictionary.dictionaryLookup(searchWord.getText()));
+            .setEditWord(searchDictionary.dictionaryLookup(searchWord.getText()));
     EditWordController.getInstance().setRunning(true);
   }
 }

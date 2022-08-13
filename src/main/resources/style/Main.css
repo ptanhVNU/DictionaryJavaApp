@@ -8,6 +8,10 @@
     -fx-background-color: -background-color;
 }
 
+.AnchorPane-main {
+    -fx-background-color: #F5F5F5;
+}
+
 /*===================================BUTTON=====================================*/
 
 .button {

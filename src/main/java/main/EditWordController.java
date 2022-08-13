@@ -163,7 +163,7 @@ public class EditWordController implements Initializable {
   @FXML
   public void button1Action() {
     TreeItem<String> selectedItem =
-        (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+            (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
     if (getTypeSeclectItem(selectedItem) == "null") {
       return;
@@ -202,7 +202,7 @@ public class EditWordController implements Initializable {
   @FXML
   public void button2Action() {
     TreeItem<String> selectedItem =
-        (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+            (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
     if (getTypeSeclectItem(selectedItem) == "null") {
       return;
@@ -224,7 +224,7 @@ public class EditWordController implements Initializable {
   @FXML
   public void saveButtonAction() {
     TreeItem<String> selectedItem =
-        (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+            (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
     selectedItem.setValue(getTypeSeclectItem(selectedItem) + " : " + editField.getText());
   }
 }
