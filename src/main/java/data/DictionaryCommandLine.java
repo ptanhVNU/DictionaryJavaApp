@@ -1,5 +1,7 @@
 package data;
 
+import javafx.util.Pair;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,18 +23,13 @@ public class DictionaryCommandLine extends DictionaryManagement {
     setResultsList(new ArrayList<>());
     getAllWord();
     System.out.printf("%-7s| %-20s| %-50s\n", "No", "English", "Vietnamese");
-    for (int i = 0; i < getResultsList().size(); i++) {
+    for (int i = 0; i < 5; i++) {
       System.out.printf(
           "%-7d| %-20s| %-50s\n",
           i,
           getResultsList().get(i).getWord(),
-          getResultsList().get(i).details.get(0).getExplanations());
+          getResultsList().get(i).getDetails().get(0).getExplanations());
     }
-  }
-
-  /** insert from cmd. */
-  public void dictionaryBasic() {
-    insertFromCommandline();
   }
 
   /** search word with key. */
@@ -96,14 +93,36 @@ public class DictionaryCommandLine extends DictionaryManagement {
   /**
    * method test api
    */
-  public void test() {
-    try {
-    Word word = dictionaryLookup("a");
-    word.addDetail(dictionaryLookup("a b c").getDetails().get(0));
-    System.out.println(word.showDetail());
-    JDBCConnect.editDatabase(word, "edit");
-    } catch (SQLException exception) {
-      System.out.println("err");
-    }
+  public void testAdd() {
+    //String text = stringScanner();
+    getAllWord();
+    Word word = new Word(dictionaryLookup("a"));
+    word.setWord("a b");
+    dictionaryAddWord(word);
+  }
+
+  public void testEdit() {
+    //String text = stringScanner();
+    getAllWord();
+    Word word = new Word(dictionaryLookup("a b"));
+    ArrayList<String> gfg = new ArrayList<String>() {
+      {
+        add("Geeks");
+        add("for");
+        add("Geeks");
+      }
+    };
+    word.getDetails().get(0).getExplanations().add(new Pair<>("asd", gfg));
+    dictionaryAddWord(word);
+  }
+
+  public void check() {
+    String text = stringScanner();
+    System.out.println(dictionaryLookup(text).showDetail());
+  }
+
+  public void testShowDetail() {
+    String text = stringScanner();
+    System.out.println(dictionaryLookup(text).toStringDetail());
   }
 }
