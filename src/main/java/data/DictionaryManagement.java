@@ -40,7 +40,7 @@ public class DictionaryManagement extends Dictionary {
   public void handleExport(ArrayList<String> list, DictionaryManagement another) {
     for (String key : list) {
       try {
-        dictionaryAddWord(another.findNode(key).getWord());
+        addNode(another.findNode(key).getWord());
       } catch (NullPointerException e) {
         e.printStackTrace();
       }
@@ -128,6 +128,7 @@ public class DictionaryManagement extends Dictionary {
    */
   public void dictionaryDeleteWord(Word data) {
     try {
+      System.out.println(data.getWord());
       JDBCConnect.editDatabase(data, "delete");
       String key = data.getWord();
       Trie delete = findNode(key);

@@ -19,7 +19,7 @@ public class Dictionary {
   }
 
   /**
-   *
+   * add Word key to Trie
    *
    * @param key keyword
    * @exception NullPointerException not found key

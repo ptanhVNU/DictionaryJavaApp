@@ -101,24 +101,24 @@ public class JDBCConnect {
    */
   public static void editDatabase(Word word, String choice) throws SQLException {
     Connection connection = DriverManager.getConnection(url, username, password);
-    String idx = "1";
     connection.setAutoCommit(false);
     connection.getTransactionIsolation();
     PreparedStatement preparedStatement = null;
     System.out.println(choice);
     switch (choice) {
       case "edit":
-        String query = "UPDATE english_vietnamese SET detail = ? WHERE idx = ?";
+        String query = "UPDATE english_vietnamese SET detail = ? WHERE word = ?";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, word.toStringDetail());
-        preparedStatement.setInt(2, Integer.parseInt(idx));
+        preparedStatement.setString(2, word.getWord());
         preparedStatement.addBatch();
         preparedStatement.executeBatch();
         break;
       case "delete":
-        String sql = "DELETE FROM english_vietnamese WHERE idx = ?";
+        String sql = "DELETE FROM english_vietnamese WHERE word = ?";
+        System.out.println(sql);
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, Integer.parseInt(idx));
+        preparedStatement.setString(1, word.getWord());
         preparedStatement.addBatch();
         preparedStatement.executeBatch();
         break;

@@ -252,11 +252,4 @@ public class TextToSpeech {
       throw new RuntimeException(e);
     }
   }
-
-  public static void main(String[] argc) throws IOException {
-    settingsImportToFile();
-    System.out.println(isFemale());
-    System.out.println(getVolume());
-    System.out.println(getRate());
-  }
 }
