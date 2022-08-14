@@ -146,7 +146,7 @@ public class DictionaryManagement extends Dictionary {
    * @exception NullPointerException if not found key
    */
   public Word dictionaryLookup(String lookUp) {
-    Word result = new Word();
+    Word result = null;
     try {
       result = findNode(lookUp).getWord();
     } catch (NullPointerException exception) {

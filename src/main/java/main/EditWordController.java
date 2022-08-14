@@ -5,6 +5,7 @@ import data.Word;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
@@ -28,8 +29,6 @@ public class EditWordController implements Initializable {
   @FXML private Button button2;
 
   @FXML private Button button3;
-
-  @FXML private Button saveButton;
 
   @FXML private HBox buttonHBox;
 
@@ -85,6 +84,12 @@ public class EditWordController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     buttonHBox.getChildren().clear();
     editHBox.getChildren().clear();
+
+    editField.setOnKeyPressed(e -> {
+      if (e.getCode().equals(KeyCode.ENTER)) {
+        saveEdit();
+      }
+    });
   }
 
   public String getTypeSeclectItem(TreeItem<String> selectedItem) {
@@ -160,21 +165,18 @@ public class EditWordController implements Initializable {
       }
       editField.setText(selectedItem.getValue().substring(12));
       editHBox.getChildren().add(editField);
-      editHBox.getChildren().add(saveButton);
     } else if (getTypeSeclectItem(selectedItem) == "Explanation") {
       if (editHBox.getChildren().contains(editField)) {
         return;
       }
       editField.setText(selectedItem.getValue().substring(14));
       editHBox.getChildren().add(editField);
-      editHBox.getChildren().add(saveButton);
     } else if (getTypeSeclectItem(selectedItem) == "Usage") {
       if (editHBox.getChildren().contains(editField)) {
         return;
       }
       editField.setText(selectedItem.getValue().substring(8));
       editHBox.getChildren().add(editField);
-      editHBox.getChildren().add(saveButton);
     }
   }
 
@@ -228,8 +230,7 @@ public class EditWordController implements Initializable {
     }
   }
 
-  @FXML
-  public void saveButtonAction() {
+  public void saveEdit() {
     TreeItem<String> selectedItem =
         (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
     selectedItem.setValue(getTypeSeclectItem(selectedItem) + " : " + editField.getText());

@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.text.Font;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -45,6 +46,8 @@ public class SearchController implements Initializable {
   @FXML private Button deleteButton;
 
   @FXML private Button speakButton;
+
+  private WebView notFoundWebView;
 
   public void disableButton() {
     bookmarkButton.setDisable(true);
@@ -99,6 +102,12 @@ public class SearchController implements Initializable {
   @Setter
   public void setTypeController(String typeController) {
     this.typeController = typeController;
+    if (typeController.equals("search")) {
+      searchList.setPlaceholder(notFoundWebView);
+    }
+    else {
+      searchList.setPlaceholder(new Label(""));
+    }
     disableButton();
     reset();
   }
@@ -132,20 +141,6 @@ public class SearchController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    searchField.setOnKeyPressed(
-        event -> {
-          if (presentDictionary() != searchDictionary) {
-            return;
-          }
-
-          if (event.getCode() == KeyCode.ENTER) {
-            if (presentDictionary().dictionaryLookupPrefix(searchField.getText()).isEmpty()) {
-              searchWord.setText(
-                  searchNotFound + " '" + standardizationString(searchField.getText()) + "'");
-            }
-          }
-        });
-
     searchDictionary = new DictionaryManagement();
     bookmarkDictionary = new DictionaryManagement();
     historyDictionary = new DictionaryManagement();
@@ -164,6 +159,28 @@ public class SearchController implements Initializable {
     historyDictionary.handleExport(
         DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\history.txt"),
         searchDictionary);
+
+    notFoundWebView = new WebView();
+    notFoundWebView
+            .getEngine()
+            .loadContent(
+                    "<br><br>"
+                            + "<p style=\"text-align: center;font-size:25px;font-family:consolas;cursor: hand;\">"
+                            + "<b >Not Found!</b>"
+                            + "</p>"
+                            + "<p style=\"text-align: center;font-size:15px;font-family:consolas;cursor: hand;\">"
+                            + "<i>Click here to add this word</i>"
+                            + "</p>",
+                    "text/html");
+    notFoundWebView.setOnMouseClicked(
+        e -> {
+          try {
+            searchWord.setText(standardizationString(searchField.getText()));
+            editAction();
+          } catch (Exception exception) {
+            exception.printStackTrace();
+          }
+        });
 
     setTypeController("search");
   }
@@ -270,16 +287,13 @@ public class SearchController implements Initializable {
 
   @FXML
   public void editAction() throws Exception {
-    if (presentDictionary() != searchDictionary
-        || searchWord.getText().equals(searchWordDefault)
-        || EditWordController.getInstance().isRunning()) {
+    if (presentDictionary() != searchDictionary || EditWordController.getInstance().isRunning()) {
       return;
     }
 
     String lookup = searchWord.getText();
 
-    if (searchWord.getText().indexOf(searchNotFound) != -1) {
-      lookup = lookup.substring(searchNotFound.length() + 2, lookup.length() - 1);
+    if (searchDictionary.dictionaryLookup(lookup) == null) {
       searchDictionary.dictionaryAddWord(new Word(lookup));
     }
 
@@ -287,6 +301,10 @@ public class SearchController implements Initializable {
     Parent root = loader.load();
     Stage editStage = new Stage();
     editStage.setScene(new Scene(root, 600, 600));
+    editStage.setMaxWidth(600);
+    editStage.setMinWidth(600);
+    editStage.setMaxHeight(650);
+    editStage.setMinHeight(650);
     editStage.setTitle("Edit Word");
 
     editStage.setOnCloseRequest(
@@ -301,6 +319,9 @@ public class SearchController implements Initializable {
             if (alert.showAndWait().get() == ButtonType.OK) {
               searchDictionary.dictionaryEditWord(
                   EditWordController.getInstance().convertTreeViewToWord());
+              searchPressKeyBoard();
+            } else {
+              searchDictionary.removeNode(EditWordController.getInstance().convertTreeViewToWord());
             }
 
             EditWordController.getInstance().setRunning(false);

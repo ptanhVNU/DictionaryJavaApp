@@ -180,10 +180,10 @@ public class Word {
     public StringBuilder getHtmlText() {
       StringBuilder answer = new StringBuilder();
 
-      answer.append("<p style=\"font-size:25px;\"><b>").append(word_type).append("</b></p>");
+      answer.append("<p style=\"font-size:22px;font-family:consolas;\"><b>").append(word_type).append("</b></p>");
       for (int i = 0; i < explanations.size(); ++i) {
         answer
-            .append("<p style=\"font-size:20px;color:#ff4dff;padding-left:15;\">")
+            .append("<p style=\"font-size:19px;color:#ff4dff;padding-left:15;font-family:consolas;\">")
             .append(explanations.get(i).getKey())
             .append("</p>");
         for (int j = 0; j < explanations.get(i).getValue().size(); ++j) {
@@ -200,7 +200,7 @@ public class Word {
           }
 
           answer
-              .append("<p style=\"font-size:17px;padding-left:30;\">")
+              .append("<p style=\"font-size:17px;padding-left:30;font-family:consolas;\">")
               .append("<noname style=\"color:#668cff;\">")
               .append(a)
               .append("</noname>")

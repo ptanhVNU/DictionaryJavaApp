@@ -36,12 +36,7 @@
             </HBox>
             <HBox fx:id="editHBox" prefHeight="100.0" prefWidth="590.0">
                <children>
-                  <TextField fx:id="editField" maxWidth="520.0" minWidth="520.0" prefWidth="520.0" />
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" text="Save">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Button>
+                  <TextField fx:id="editField" maxWidth="590.0" minWidth="590.0" prefHeight="35.0" prefWidth="590.0" />
                </children>
                <padding>
                   <Insets bottom="10.0" />

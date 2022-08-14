@@ -40,7 +40,7 @@
                                     <children>
                                         <Label fx:id="searchWord" prefHeight="50.0" text="Nghĩa của từ">
                                             <font>
-                                                <Font name="System Bold" size="22.0" />
+                                                <Font name="System Bold" size="25.0" />
                                             </font></Label>
                                         <Button fx:id="speakButton" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#speakAction" prefHeight="30.0" prefWidth="30.0">
                                             <graphic>

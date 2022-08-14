@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -18,8 +19,14 @@ public class dictionaryApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         TextToSpeech.settingsImportToFile();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Main.fxml")));
+        primaryStage.getIcons().add(new Image("graphics/image/icon_app.png"));
         primaryStage.setTitle("Dictionary");
+        primaryStage.setMaxWidth(900);
+        primaryStage.setMinWidth(900);
+        primaryStage.setMaxHeight(650);
+        primaryStage.setMinHeight(650);
         primaryStage.setScene(new Scene(root, 900, 600));
+
         primaryStage.show();
     }
 
