@@ -7,19 +7,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.EditWordController">
+<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" stylesheets="@../style/EditWord.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.EditWordController">
    <children>
       <TreeView fx:id="treeView" layoutX="5.0" layoutY="14.0" maxHeight="490.0" maxWidth="600.0" minHeight="490.0" minWidth="600.0" onContextMenuRequested="#selectAction" onMouseClicked="#selectAction" prefHeight="490.0" prefWidth="600.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <VBox layoutY="500.0" maxHeight="95.0" maxWidth="600.0" minHeight="95.0" minWidth="600.0" prefHeight="95.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
          <children>
             <HBox fx:id="buttonHBox" prefHeight="155.0" prefWidth="590.0">
                <children>
-                  <Button fx:id="button1" mnemonicParsing="false" onAction="#button1Action" text="Edit">
+                  <Button fx:id="button1" mnemonicParsing="false" onAction="#button1Action">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="button2" mnemonicParsing="false" onAction="#button2Action" text="Add ">
+                  <Button fx:id="button2" mnemonicParsing="false" onAction="#button2Action">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="button3" layoutX="106.0" layoutY="10.0" mnemonicParsing="false" onAction="#button3Action">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>

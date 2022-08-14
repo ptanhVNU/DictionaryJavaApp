@@ -16,12 +16,12 @@ public class Word {
 
   public Word() {
     this.word = "";
-    details = new ArrayList<>();
+    details = new ArrayList<Detail>();
   }
 
   public Word(String word) {
     this.word = word;
-    details = new ArrayList<>();
+    details = new ArrayList<Detail>();
   }
 
   public Word(Word word) {
@@ -71,8 +71,7 @@ public class Word {
     this.bookmark = bookmark;
   }
 
-  public void addDetail(
-          String word_type, ArrayList<Pair<String, ArrayList<String>>> usages) {
+  public void addDetail(String word_type, ArrayList<Pair<String, ArrayList<String>>> usages) {
     details.add(new Detail(word_type, usages));
   }
 
@@ -132,10 +131,10 @@ public class Word {
     private ArrayList<Pair<String, ArrayList<String>>> explanations = new ArrayList<>();
 
     public Detail() {
+      word_type = "";
     }
 
-    public Detail(
-            String word_type, ArrayList<Pair<String, ArrayList<String>>> explanations) {
+    public Detail(String word_type, ArrayList<Pair<String, ArrayList<String>>> explanations) {
       this.word_type = word_type;
       this.explanations = explanations;
     }
@@ -157,7 +156,6 @@ public class Word {
       this.word_type = word_type;
     }
 
-
     public void setExplanations(ArrayList<Pair<String, ArrayList<String>>> explanations) {
       this.explanations = explanations;
     }
@@ -178,5 +176,51 @@ public class Word {
       }
       return response.toString();
     }
+
+    public StringBuilder getHtmlText() {
+      StringBuilder answer = new StringBuilder();
+
+      answer.append("<p style=\"font-size:25px;\"><b>").append(word_type).append("</b></p>");
+      for (int i = 0; i < explanations.size(); ++i) {
+        answer
+            .append("<p style=\"font-size:20px;color:#ff4dff;padding-left:15;\">")
+            .append(explanations.get(i).getKey())
+            .append("</p>");
+        for (int j = 0; j < explanations.get(i).getValue().size(); ++j) {
+          String s = explanations.get(i).getValue().get(j);
+          String a;
+          String b;
+
+          if (s.indexOf("+") == -1) {
+            a = s;
+            b = "";
+          } else {
+            a = s.substring(0, s.indexOf("+"));
+            b = explanations.get(i).getValue().get(j).substring(a.length() + 2);
+          }
+
+          answer
+              .append("<p style=\"font-size:17px;padding-left:30;\">")
+              .append("<noname style=\"color:#668cff;\">")
+              .append(a)
+              .append("</noname>")
+              .append("<br>")
+              .append(b)
+              .append("</p>");
+        }
+      }
+
+      return answer;
+    }
+  }
+
+  public String getHtmlText() {
+    StringBuilder answer = new StringBuilder();
+
+    for (int i = 0; i < getDetails().size(); ++i) {
+      answer.append(getDetails().get(i).getHtmlText());
+    }
+
+    return answer.toString();
   }
 }

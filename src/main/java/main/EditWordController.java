@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class EditWordController implements Initializable {
   @FXML private Button button1;
 
   @FXML private Button button2;
+
+  @FXML private Button button3;
 
   @FXML private Button saveButton;
 
@@ -74,31 +77,8 @@ public class EditWordController implements Initializable {
     treeView.setRoot(rootItem);
   }
 
-  public void convertTreeViewToWord() {
-//    editWord.getDetails().clear();
-//
-//    for (int i = 0; i < treeView.getRoot().getChildren().size(); ++i) {
-//      TreeItem<String> Detail = (TreeItem<String>) treeView.getRoot().getChildren().get(i);
-//      editWord.addDetail(
-//          Detail.getChildren().get(0).getValue().substring(12),
-//          Detail.getChildren().get(1).getValue().substring(15),
-//          new ArrayList<String>());
-//
-//      for (int j = 0;
-//          j < ((TreeItem<String>) Detail.getChildren().get(2)).getChildren().size();
-//          ++j) {
-//        editWord
-//            .getDetails()
-//            .get(i)
-//            .getUsages()
-//            .add(
-//                ((TreeItem<String>) Detail.getChildren().get(2))
-//                    .getChildren()
-//                    .get(j)
-//                    .getValue()
-//                    .substring(1));
-//      }
-//    }
+  public Word convertTreeViewToWord() {
+    return CovertTreeViewAndWord.covertTreeItemToWord(treeView.getRoot());
   }
 
   @Override
@@ -116,14 +96,12 @@ public class EditWordController implements Initializable {
       return "Detail";
     } else if (selectedItem.getParent().getParent() == treeView.getRoot()) {
       if (selectedItem.getValue().substring(0, 3).equals("Wor")) {
-        return "Word Type";
-      } else if (selectedItem.getValue().substring(0, 3).equals("Exp")) {
-        return "Explanations";
+        return "Word type";
       } else {
-        return "Usages";
+        return "Explanation";
       }
     } else {
-      return "-";
+      return "Usage";
     }
   }
 
@@ -140,19 +118,20 @@ public class EditWordController implements Initializable {
       buttonHBox.getChildren().add(button1);
     } else if (getTypeSeclectItem(selectedItem) == "Detail") {
       button1.setText("Delete");
-      buttonHBox.getChildren().add(button1);
-    } else if (getTypeSeclectItem(selectedItem) == "Word Type") {
-      button1.setText("Edit");
-      buttonHBox.getChildren().add(button1);
-    } else if (getTypeSeclectItem(selectedItem) == "Explanations") {
-      button1.setText("Edit");
-      buttonHBox.getChildren().add(button1);
-    } else if (getTypeSeclectItem(selectedItem) == "Usages") {
-      button1.setText("Add Usage");
-      button2.setText("Clear");
+      button2.setText("Add Explanation");
       buttonHBox.getChildren().add(button1);
       buttonHBox.getChildren().add(button2);
-    } else {
+    } else if (getTypeSeclectItem(selectedItem) == "Word type") {
+      button1.setText("Edit");
+      buttonHBox.getChildren().add(button1);
+    } else if (getTypeSeclectItem(selectedItem) == "Explanation") {
+      button1.setText("Edit");
+      button2.setText("Delete");
+      button3.setText("Add Usage");
+      buttonHBox.getChildren().add(button1);
+      buttonHBox.getChildren().add(button2);
+      buttonHBox.getChildren().add(button3);
+    } else if (getTypeSeclectItem(selectedItem) == "Usage") {
       button1.setText("Edit");
       button2.setText("Delete");
       buttonHBox.getChildren().add(button1);
@@ -163,37 +142,37 @@ public class EditWordController implements Initializable {
   @FXML
   public void button1Action() {
     TreeItem<String> selectedItem =
-            (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+        (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
     if (getTypeSeclectItem(selectedItem) == "null") {
       return;
     } else if (getTypeSeclectItem(selectedItem) == "") {
-      TreeItem<String> newItem = new TreeItem<>("Detail : ");
-      newItem.getChildren().add(new TreeItem<String>("Word Type : "));
-      newItem.getChildren().add(new TreeItem<String>("Explanations : "));
-      newItem.getChildren().add(new TreeItem<String>("Usages : none"));
-
+      TreeItem<String> newItem = CovertTreeViewAndWord.covertDetailToTreeItem(new Word.Detail());
       selectedItem.getChildren().add(newItem);
       treeView.getSelectionModel().clearAndSelect(treeView.getRow(newItem));
       selectAction();
     } else if (getTypeSeclectItem(selectedItem) == "Detail") {
       selectedItem.getParent().getChildren().remove(selectedItem);
       treeView.getSelectionModel().clearSelection();
-    } else if (getTypeSeclectItem(selectedItem) == "Word Type") {
+    } else if (getTypeSeclectItem(selectedItem) == "Word type") {
+      if (editHBox.getChildren().contains(editField)) {
+        return;
+      }
       editField.setText(selectedItem.getValue().substring(12));
       editHBox.getChildren().add(editField);
       editHBox.getChildren().add(saveButton);
-    } else if (getTypeSeclectItem(selectedItem) == "Explanations") {
-      editField.setText(selectedItem.getValue().substring(15));
+    } else if (getTypeSeclectItem(selectedItem) == "Explanation") {
+      if (editHBox.getChildren().contains(editField)) {
+        return;
+      }
+      editField.setText(selectedItem.getValue().substring(14));
       editHBox.getChildren().add(editField);
       editHBox.getChildren().add(saveButton);
-    } else if (getTypeSeclectItem(selectedItem) == "Usages") {
-      TreeItem<String> newItem = new TreeItem<>("");
-      selectedItem.getChildren().add(newItem);
-      treeView.getSelectionModel().clearAndSelect(treeView.getRow(newItem));
-      selectAction();
-    } else {
-      editField.setText(selectedItem.getValue());
+    } else if (getTypeSeclectItem(selectedItem) == "Usage") {
+      if (editHBox.getChildren().contains(editField)) {
+        return;
+      }
+      editField.setText(selectedItem.getValue().substring(8));
       editHBox.getChildren().add(editField);
       editHBox.getChildren().add(saveButton);
     }
@@ -202,7 +181,34 @@ public class EditWordController implements Initializable {
   @FXML
   public void button2Action() {
     TreeItem<String> selectedItem =
-            (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+        (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+
+    if (getTypeSeclectItem(selectedItem) == "null") {
+      return;
+    } else if (getTypeSeclectItem(selectedItem) == "") {
+      return;
+    } else if (getTypeSeclectItem(selectedItem) == "Detail") {
+      TreeItem<String> newItem =
+          CovertTreeViewAndWord.covertExplanationToTreeItem(
+              new Pair<String, ArrayList<String>>("", new ArrayList<String>()));
+      selectedItem.getChildren().add(newItem);
+      treeView.getSelectionModel().clearAndSelect(treeView.getRow(newItem));
+      selectAction();
+    } else if (getTypeSeclectItem(selectedItem) == "Word type") {
+      return;
+    } else if (getTypeSeclectItem(selectedItem) == "Explanation") {
+      selectedItem.getParent().getChildren().remove(selectedItem);
+      treeView.getSelectionModel().clearSelection();
+    } else if (getTypeSeclectItem(selectedItem) == "Usage") {
+      selectedItem.getParent().getChildren().remove(selectedItem);
+      treeView.getSelectionModel().clearSelection();
+    }
+  }
+
+  @FXML
+  public void button3Action() {
+    TreeItem<String> selectedItem =
+        (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
     if (getTypeSeclectItem(selectedItem) == "null") {
       return;
@@ -210,21 +216,23 @@ public class EditWordController implements Initializable {
       return;
     } else if (getTypeSeclectItem(selectedItem) == "Detail") {
       return;
-    } else if (getTypeSeclectItem(selectedItem) == "Word Type") {
+    } else if (getTypeSeclectItem(selectedItem) == "Word type") {
       return;
-    } else if (getTypeSeclectItem(selectedItem) == "Explanations") {
+    } else if (getTypeSeclectItem(selectedItem) == "Explanation") {
+      TreeItem<String> newItem = new TreeItem<>("Usages : ");
+      selectedItem.getChildren().add(newItem);
+      treeView.getSelectionModel().clearAndSelect(treeView.getRow(newItem));
+      selectAction();
+    } else if (getTypeSeclectItem(selectedItem) == "Usage") {
       return;
-    } else if (getTypeSeclectItem(selectedItem) == "Usages") {
-      selectedItem.getChildren().clear();
-    } else {
-      selectedItem.getParent().getChildren().remove(selectedItem);
     }
   }
 
   @FXML
   public void saveButtonAction() {
     TreeItem<String> selectedItem =
-            (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+        (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
     selectedItem.setValue(getTypeSeclectItem(selectedItem) + " : " + editField.getText());
+    editHBox.getChildren().clear();
   }
 }

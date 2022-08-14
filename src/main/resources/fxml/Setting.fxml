@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SettingController">
+<AnchorPane prefHeight="600.0" prefWidth="810.0" styleClass="anchor-pane" stylesheets="@../style/Setting.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SettingController">
    <children>
-      <Slider fx:id="volumeSlider" layoutX="200.0" layoutY="200.0" onMouseReleased="#slideVolumeAction" />
-      <Slider fx:id="speedSlider" layoutX="200.0" layoutY="272.0" onMouseReleased="#slideRateAction" />
-      <ToggleButton layoutX="200.0" layoutY="116.0" mnemonicParsing="false" text="ToggleButton" />
+      <Slider fx:id="volumeSlider" layoutX="344.0" layoutY="291.0" onMouseReleased="#slideVolumeAction" prefHeight="0.0" prefWidth="250.0" />
+      <Slider fx:id="speedSlider" layoutX="344.0" layoutY="401.0" onMouseReleased="#slideRateAction" prefHeight="0.0" prefWidth="250.0" />
+      <Label layoutX="167.0" layoutY="170.0" text="Volume">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="163.0" layoutY="392.0" text="Speed">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="femaleRadioButton" layoutX="344.0" layoutY="174.0" mnemonicParsing="false" onAction="#getVoice" text="Female">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="voice" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="maleRadioButton" layoutX="469.0" layoutY="174.0" mnemonicParsing="false" onAction="#getVoice" prefHeight="27.0" prefWidth="82.0" text="Male" toggleGroup="$voice">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <Label layoutX="167.0" layoutY="283.0" text="Voice">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

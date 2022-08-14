@@ -118,6 +118,20 @@ public class Dictionary {
   }
 
   /**
+   * Remove a Word.
+   *
+   * @param word
+   * @exception NullPointerException not found node
+   */
+  public void removeNode(Word word) {
+    try {
+      deleteNode(findNode(word.getWord()));
+    } catch (NullPointerException exception) {
+      exception.printStackTrace();
+    }
+  }
+
+  /**
    * Find out all word have prefix key. List of word is resultsList (variable of class)
    *
    * @param key

@@ -24,9 +24,8 @@ public class JDBCConnect {
     Connection connection = DriverManager.getConnection(url, username, password);
     Statement statement = connection.createStatement();
     ResultSet resultSet = statement.executeQuery("SELECT * FROM english_vietnamese");
-    int cnt = 5;
+
     while (resultSet.next()) {
-      if (cnt == 0) break; cnt--;
       String idx = resultSet.getString("idx");
       String word_target = resultSet.getString("word");
       String detail = resultSet.getString("detail");
