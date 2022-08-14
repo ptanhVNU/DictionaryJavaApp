@@ -185,10 +185,11 @@ public class SearchController implements Initializable {
   }
 
   @FXML
-  public void searchPressKeyBoard() { // khi nhập từ
+  public void searchPressKeyBoard() {
     searchList.getItems().clear();
     String lookUp = standardizationString(searchField.getText());
     searchList.getItems().addAll(presentDictionary().dictionaryLookupPrefix(lookUp));
+    searchList.scrollTo(0);
   }
 
   @FXML
