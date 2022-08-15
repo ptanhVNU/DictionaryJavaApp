@@ -9,7 +9,7 @@ import java.net.URLEncoder;
 
 public class TranslateAPI {
   /**
-   * gg trans api
+   * gg trans api.
    *
    * @param langFrom lang initial
    * @param langTo lang final

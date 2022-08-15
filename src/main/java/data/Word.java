@@ -14,16 +14,27 @@ public class Word {
 
   protected ArrayList<Detail> details = new ArrayList<>();
 
+  /** constructor with null. */
   public Word() {
     this.word = "";
     details = new ArrayList<Detail>();
   }
 
+  /**
+   * constructor with String word only.
+   *
+   * @param word string
+   */
   public Word(String word) {
     this.word = word;
     details = new ArrayList<Detail>();
   }
 
+  /**
+   * constructor with completed word.
+   *
+   * @param word Word
+   */
   public Word(Word word) {
     this.setWord(word.getWord());
     this.setPronunciation(word.getPronunciation());
@@ -31,6 +42,11 @@ public class Word {
     this.setDetails(word.getDetails());
   }
 
+  /**
+   * edit this->word out new word.
+   *
+   * @param word edit old word out new word
+   */
   public void edit(Word word) {
     this.setWord(word.getWord());
     this.setPronunciation(word.getPronunciation());
@@ -39,6 +55,7 @@ public class Word {
     return;
   }
 
+  /** get/set-er. */
   public String getWord() {
     return word;
   }
@@ -71,20 +88,36 @@ public class Word {
     this.bookmark = bookmark;
   }
 
-  public void addDetail(String word_type, ArrayList<Pair<String, ArrayList<String>>> usages) {
-    details.add(new Detail(word_type, usages));
+  /**
+   * add new Detail for word by word type n list of explanations.
+   *
+   * @param word_type word type of word
+   * @param explanations list of explanations n usages
+   */
+  public void addDetail(String word_type, ArrayList<Pair<String, ArrayList<String>>> explanations) {
+    details.add(new Detail(word_type, explanations));
   }
 
+  /**
+   * add new Detail for word by a Detail.
+   *
+   * @param detail detail of this word
+   */
   public void addDetail(Detail detail) {
     details.add(detail);
   }
 
+  /**
+   * get String word of this Word.
+   *
+   * @return String getWord
+   */
   public String toString() {
     return this.getWord();
   }
 
   /**
-   * generate string with detail db format
+   * generate string with detail db format.
    *
    * @return String detail db format
    */
@@ -106,7 +139,7 @@ public class Word {
   }
 
   /**
-   * show detail
+   * show detail.
    *
    * @return String detail
    */
@@ -123,6 +156,21 @@ public class Word {
   @Override
   protected Object clone() throws CloneNotSupportedException {
     return super.clone();
+  }
+
+  /**
+   * get html text of details.
+   *
+   * @return String answer has all of html text of details
+   */
+  public String getHtmlText() {
+    StringBuilder answer = new StringBuilder();
+
+    for (int i = 0; i < getDetails().size(); ++i) {
+      answer.append(getDetails().get(i).getHtmlText());
+    }
+
+    return answer.toString();
   }
 
   public static class Detail {
@@ -177,15 +225,24 @@ public class Word {
       return response.toString();
     }
 
+    /**
+     * get html text of this detail.
+     *
+     * @return StringBuilder of html text
+     */
     public StringBuilder getHtmlText() {
       StringBuilder answer = new StringBuilder();
 
-      answer.append("<p style=\"font-size:22px;font-family:consolas;\"><b>").append(word_type).append("</b></p>");
+      answer
+              .append("<p style=\"font-size:22px;font-family:consolas;\"><b>")
+              .append(word_type)
+              .append("</b></p>");
       for (int i = 0; i < explanations.size(); ++i) {
         answer
-            .append("<p style=\"font-size:19px;color:#ff4dff;padding-left:15;font-family:consolas;\">")
-            .append(explanations.get(i).getKey())
-            .append("</p>");
+                .append(
+                        "<p style=\"font-size:19px;color:#ff4dff;padding-left:15;font-family:consolas;\">")
+                .append(explanations.get(i).getKey())
+                .append("</p>");
         for (int j = 0; j < explanations.get(i).getValue().size(); ++j) {
           String s = explanations.get(i).getValue().get(j);
           String a;
@@ -200,27 +257,17 @@ public class Word {
           }
 
           answer
-              .append("<p style=\"font-size:17px;padding-left:30;font-family:consolas;\">")
-              .append("<noname style=\"color:#668cff;\">")
-              .append(a)
-              .append("</noname>")
-              .append("<br>")
-              .append(b)
-              .append("</p>");
+                  .append("<p style=\"font-size:17px;padding-left:30;font-family:consolas;\">")
+                  .append("<noname style=\"color:#668cff;\">")
+                  .append(a)
+                  .append("</noname>")
+                  .append("<br>")
+                  .append(b)
+                  .append("</p>");
         }
       }
 
       return answer;
     }
-  }
-
-  public String getHtmlText() {
-    StringBuilder answer = new StringBuilder();
-
-    for (int i = 0; i < getDetails().size(); ++i) {
-      answer.append(getDetails().get(i).getHtmlText());
-    }
-
-    return answer.toString();
   }
 }

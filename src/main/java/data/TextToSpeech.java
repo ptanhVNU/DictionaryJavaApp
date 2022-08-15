@@ -60,7 +60,7 @@ public class TextToSpeech {
   }
 
   /**
-   * set speed speech
+   * set speed speech.
    *
    * @param rate
    * @throws IllegalArgumentException err range tts
@@ -93,6 +93,8 @@ public class TextToSpeech {
   }
 
   /**
+   * generate mp3 to file
+   *
    * @param speakText content tts
    * @param lang voice name
    * @throws IOException err generate mp3 file
@@ -136,9 +138,9 @@ public class TextToSpeech {
   }
 
   /**
-   * play file mp3 was be generated
+   * play file mp3 was be generated.
    *
-   * @param filePath
+   * @param filePath path contain mp3 file
    */
   public static void play(String filePath) {
     final File file = new File(filePath);
@@ -167,7 +169,7 @@ public class TextToSpeech {
   }
 
   /**
-   * fix format audio
+   * fix format audio.
    *
    * @param inFormat inp format to fix
    * @return new audio format
@@ -179,7 +181,7 @@ public class TextToSpeech {
   }
 
   /**
-   * stream
+   * stream.
    *
    * @param in audio inp
    * @param line line
@@ -193,7 +195,7 @@ public class TextToSpeech {
   }
 
   /**
-   * enter speakText and lang to speech
+   * enter speakText and lang to speech.
    *
    * @param speakText content ts
    * @param lang voiceName

@@ -15,10 +15,10 @@ public class JDBCConnect {
   private static int idx = 0;
 
   /**
-   * Import Database for dictionary
+   * Import Database for dictionary.
    *
    * @return list of words to add other dictionary
-   * @throws SQLException
+   * @throws SQLException sql err
    */
   public static ArrayList<Word> importDatabase() throws SQLException {
     Connection connection = DriverManager.getConnection(url, username, password);
@@ -67,10 +67,10 @@ public class JDBCConnect {
   }
 
   /**
-   * import data
+   * import data.
    *
-   * @param word
-   * @throws SQLException
+   * @param word import word to database
+   * @throws SQLException sql err
    */
   public static void insertToDatabase(Word word) throws SQLException {
     JDBCConnect.idx++;
@@ -93,7 +93,7 @@ public class JDBCConnect {
   }
 
   /**
-   * edit or delete on db
+   * edit or delete on db.
    *
    * @param word add
    * @param choice edit or delete

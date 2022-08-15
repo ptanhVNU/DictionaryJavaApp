@@ -171,10 +171,15 @@ public class DictionaryManagement extends Dictionary {
     return getResultsList();
   }
 
-  public void dictionaryEditWord(Word word) {
+  /**
+   * edit word
+   *
+   * @param data change word in dictionary has String word equal data->word to data
+   */
+  public void dictionaryEditWord(Word data) {
     try {
-      dictionaryLookup(word.getWord()).edit(word);
-      JDBCConnect.editDatabase(word, "edit");
+      dictionaryLookup(data.getWord()).edit(data);
+      JDBCConnect.editDatabase(data, "edit");
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
