@@ -12,7 +12,7 @@
    <children>
       <Slider fx:id="volumeSlider" layoutX="344.0" layoutY="291.0" onMouseReleased="#slideVolumeAction" prefHeight="0.0" prefWidth="250.0" />
       <Slider fx:id="speedSlider" layoutX="344.0" layoutY="401.0" onMouseReleased="#slideRateAction" prefHeight="0.0" prefWidth="250.0" />
-      <Label layoutX="167.0" layoutY="170.0" text="Volume">
+      <Label layoutX="167.0" layoutY="170.0" text="Voice">
          <font>
             <Font size="24.0" />
          </font>
@@ -35,7 +35,7 @@
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <Label layoutX="167.0" layoutY="283.0" text="Voice">
+      <Label layoutX="167.0" layoutY="283.0" text="Volume">
          <font>
             <Font size="24.0" />
          </font>
