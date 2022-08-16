@@ -23,6 +23,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -39,6 +41,8 @@ public class SearchController implements Initializable {
   @FXML private WebView webView;
   @FXML private ListView<Word> searchList;
   @FXML private Label searchWord;
+
+  @FXML private Label pronunciationLabel;
   @FXML private Button bookmarkButton;
 
   @FXML private Button editButton;
@@ -125,6 +129,7 @@ public class SearchController implements Initializable {
 
   public void reset() {
     searchWord.setText(searchWordDefault);
+    pronunciationLabel.setText("");
     searchField.setText("");
     searchList.getItems().clear();
     webView.getEngine().loadContent("");
@@ -135,6 +140,8 @@ public class SearchController implements Initializable {
     searchList.getItems().remove(searchList.getSelectionModel().getSelectedItem());
     searchList.getSelectionModel().clearSelection();
     searchWord.setText(searchWordDefault);
+    webView.getEngine().loadContent("");
+    pronunciationLabel.setText("");
     disableButton();
   }
 
@@ -158,6 +165,8 @@ public class SearchController implements Initializable {
     historyDictionary.handleExport(
         DictionaryManagement.dictionaryImportFromFile("src\\main\\resources\\data\\history.txt"),
         searchDictionary);
+
+    pronunciationLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.ITALIC, 20));
 
     notFoundWebView = new WebView();
     notFoundWebView
@@ -216,6 +225,11 @@ public class SearchController implements Initializable {
     }
 
     ableButton();
+
+    if (!searchList.getSelectionModel().getSelectedItem().getPronunciation().equals("")) {
+      pronunciationLabel.setText(
+          searchList.getSelectionModel().getSelectedItem().getPronunciation() + "  ");
+    }
 
     webView
         .getEngine()
