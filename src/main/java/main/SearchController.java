@@ -301,10 +301,6 @@ public class SearchController implements Initializable {
     Parent root = loader.load();
     Stage editStage = new Stage();
     editStage.setScene(new Scene(root, 600, 600));
-    editStage.setMaxWidth(600);
-    editStage.setMinWidth(600);
-    editStage.setMaxHeight(650);
-    editStage.setMinHeight(650);
     editStage.setTitle("Edit Word");
 
     editStage.setOnCloseRequest(
@@ -333,5 +329,10 @@ public class SearchController implements Initializable {
     EditWordController.getInstance().setRunning(true);
 
     editStage.show();
+
+    editStage.setMaxWidth(editStage.getWidth());
+    editStage.setMinWidth(editStage.getWidth());
+    editStage.setMaxHeight(editStage.getHeight());
+    editStage.setMinHeight(editStage.getHeight());
   }
 }
