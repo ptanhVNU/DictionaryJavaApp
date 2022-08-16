@@ -11,6 +11,7 @@
 .choice-box {
     -fx-background-color: white;
     -fx-mark-color: black;
+    -fx-font-size: 16;
 }
 
 /*================================BUTTON===========================*/

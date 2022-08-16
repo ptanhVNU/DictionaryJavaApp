@@ -43,9 +43,6 @@
     -fx-cursor: default !important;
 }
 
-.button-inactive:hover .SVGPath-mainPane {
-    -fx-fill: -text-color !important;
-}
 
 /*===================================SVGPath=====================================*/
 
@@ -53,4 +50,10 @@
     -fx-fill: -text-color;
     -fx-scale-x: 0.9;
     -fx-scale-y: 0.9;
+}
+
+.SVGPath-logo {
+        -fx-fill: -hover-text-color;
+        -fx-scale-x: 1;
+        -fx-scale-y: 1;
 }
