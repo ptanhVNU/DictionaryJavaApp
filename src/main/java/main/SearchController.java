@@ -104,8 +104,7 @@ public class SearchController implements Initializable {
     this.typeController = typeController;
     if (typeController.equals("search")) {
       searchList.setPlaceholder(notFoundWebView);
-    }
-    else {
+    } else {
       searchList.setPlaceholder(new Label(""));
     }
     disableButton();
@@ -162,16 +161,16 @@ public class SearchController implements Initializable {
 
     notFoundWebView = new WebView();
     notFoundWebView
-            .getEngine()
-            .loadContent(
-                    "<br><br>"
-                            + "<p style=\"text-align: center;font-size:25px;font-family:consolas;cursor: hand;\">"
-                            + "<b >Not Found!</b>"
-                            + "</p>"
-                            + "<p style=\"text-align: center;font-size:15px;font-family:consolas;cursor: hand;\">"
-                            + "<i>Click here to add this word</i>"
-                            + "</p>",
-                    "text/html");
+        .getEngine()
+        .loadContent(
+            "<br><br>"
+                + "<p style=\"text-align: center;font-size:25px;font-family:consolas;cursor: hand;\">"
+                + "<b >Not Found!</b>"
+                + "</p>"
+                + "<p style=\"text-align: center;font-size:15px;font-family:consolas;cursor: hand;\">"
+                + "<i>Click here to add this word</i>"
+                + "</p>",
+            "text/html");
     notFoundWebView.setOnMouseClicked(
         e -> {
           try {
@@ -287,7 +286,9 @@ public class SearchController implements Initializable {
 
   @FXML
   public void editAction() throws Exception {
-    if (presentDictionary() != searchDictionary || EditWordController.getInstance().isRunning()) {
+    if (presentDictionary() != searchDictionary
+        || EditWordController.getInstance().isRunning()
+        || searchWord.getText().equals(searchWordDefault)) {
       return;
     }
 
