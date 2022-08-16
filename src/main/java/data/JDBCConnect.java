@@ -1,7 +1,6 @@
 package data;
 
 import javafx.util.Pair;
-import jdk.nashorn.internal.scripts.JD;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class JDBCConnect {
   public static ArrayList<Word> importDatabase() throws SQLException {
     Connection connection = DriverManager.getConnection(url, username, password);
     Statement statement = connection.createStatement();
-    ResultSet resultSet = statement.executeQuery("SELECT * FROM english_vietnamese");
+    ResultSet resultSet = statement.executeQuery("SELECT * from english_vietnamese order by idx ASC;");
 
     while (resultSet.next()) {
       String idx = resultSet.getString("idx");
@@ -33,7 +32,7 @@ public class JDBCConnect {
       res = detail.split(">");
       Word word = new Word();
       word.setWord(word_target);
-      word.setPronunciation(res[0].split(" ")[1].trim());
+      word.setPronunciation(res[0].split(" ")[0].trim());
       Word.Detail temporaryDetail = new Word.Detail();
       Pair<String, ArrayList<String>> pair = new Pair<>("", new ArrayList<>());
       ArrayList<String> list = new ArrayList<>();

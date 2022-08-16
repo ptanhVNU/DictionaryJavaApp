@@ -53,6 +53,12 @@
 }
 
 .SVGPath-logo {
+    -fx-fill: -hover-text-color;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.SVGPath-logo {
         -fx-fill: -hover-text-color;
         -fx-scale-x: 1;
         -fx-scale-y: 1;

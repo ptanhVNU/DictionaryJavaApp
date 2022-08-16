@@ -2,16 +2,14 @@ package data;
 
 import javax.sound.sampled.*;
 import javax.sound.sampled.DataLine.Info;
-
-import static javax.sound.sampled.AudioSystem.getAudioInputStream;
-import static javax.sound.sampled.AudioFormat.Encoding.PCM_SIGNED;
-
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static javax.sound.sampled.AudioFormat.Encoding.PCM_SIGNED;
+import static javax.sound.sampled.AudioSystem.getAudioInputStream;
 
 public class TextToSpeech {
   private static Map<String, String> langCode;
@@ -24,6 +22,8 @@ public class TextToSpeech {
   private static float volume; // 0 -> 200
 
   private static boolean female;
+
+  final static String filePath = "src/main/resources/data/testAudio.mp3";
 
   static {
     langCode = new HashMap<String, String>();
@@ -92,6 +92,7 @@ public class TextToSpeech {
     TextToSpeech.female = female;
   }
 
+
   /**
    * generate mp3 to file
    *
@@ -132,7 +133,7 @@ public class TextToSpeech {
     stream = out.toByteArray();
 
     FileOutputStream fos =
-        new FileOutputStream("..\\DictionaryJavaApp\\src\\main\\resources\\data\\testAudio.mp3");
+        new FileOutputStream(filePath);
     fos.write(stream);
     fos.close();
   }
@@ -203,7 +204,7 @@ public class TextToSpeech {
    */
   public static void speak(String speakText, String lang) throws IOException {
     generateMP3(speakText, lang);
-    play("..\\DictionaryJavaApp\\src\\main\\resources\\data\\testAudio.mp3");
+    play(filePath);
   }
 
   /**
@@ -214,7 +215,7 @@ public class TextToSpeech {
    */
   public static void speak(String speakText) throws IOException {
     generateMP3(speakText, "English");
-    play("..\\DictionaryJavaApp\\src\\main\\resources\\data\\testAudio.mp3");
+    play(filePath);
   }
 
   /**

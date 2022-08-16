@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1b8a8883-4d62-4a8a-86bb-0d5040621525" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__net_sf_sociaal_freetts_1_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dictionary.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Dictionary.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/data/JDBCConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/data/JDBCConnect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/data/TextToSpeech.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/data/TextToSpeech.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/main/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/data/bookmarks.txt" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/data/bookmarks.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/data/history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/data/history.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/data/settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/data/settings.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/data/testAudio.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/data/testAudio.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/fxml/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/fxml/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/style/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/style/Main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/style/Translate.css" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/style/Translate.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/Dictionary$Trie.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/Dictionary$Trie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/Dictionary.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/Dictionary.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/DictionaryManagement.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/DictionaryManagement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/TextToSpeech.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/TextToSpeech.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/TranslateAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/TranslateAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/Word$Detail.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/Word$Detail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/Word.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/Word.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/bookmarks.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/bookmarks.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/data/history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/data/history.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/fxml/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/fxml/Search.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/Search.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/fxml/Setting.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/Setting.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/fxml/Translate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/fxml/Translate.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/main/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/main/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/main/SearchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/main/SearchController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/main/SettingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/main/SettingController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/main/TranslateController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/main/TranslateController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/main/dictionaryApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/main/dictionaryApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/style/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/style/Main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/style/Search.css" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/style/Search.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/style/Translate.css" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/style/Translate.css" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2DQaJaysXRyDU6QijTBldSbAggE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1b8a8883-4d62-4a8a-86bb-0d5040621525" name="Changes" comment="" />
+      <created>1660633695917</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1660633695917</updated>
+      <workItem from="1660633695920" duration="2000" />
+    </task>
+    <servers />
+  </component>
+</project>

@@ -3,12 +3,10 @@ package main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
