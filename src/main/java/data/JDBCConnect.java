@@ -32,7 +32,14 @@ public class JDBCConnect {
       res = detail.split(">");
       Word word = new Word();
       word.setWord(word_target);
-      word.setPronunciation(res[0].split(" ")[0].trim());
+      String[] parts = res[0].split(" ");
+      int start = 0;
+      for (String part : parts) {
+        if (!part.startsWith("/")) {
+          start = start + part.length() + 1;
+        } else break;
+      }
+      word.setPronunciation(res[0].substring(start - 1).trim());
       Word.Detail temporaryDetail = new Word.Detail();
       Pair<String, ArrayList<String>> pair = new Pair<>("", new ArrayList<>());
       ArrayList<String> list = new ArrayList<>();
